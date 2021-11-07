@@ -48,29 +48,26 @@
     padding: 20px 40px;
   `;
 
- class Panel extends React.Component {
-   render() {
-     const {inputs, displayTimes, displayRounds, onClick, onReset, status} = this.props;
-     return (
-       <PanelStyle>
-        <InputsContainer>
-          {inputs}
-        </InputsContainer>
-        <DisplayContainer>
-          {displayTimes}
-          {displayRounds}
-        </DisplayContainer>
-        <ControlsContainer>
-          <ButtonPanel
-            status={status}
-            onClick={onClick}
-            onReset={onReset}
-          />
-        </ControlsContainer>
-       </PanelStyle>
-     )
-   };
- }
+ const Panel = ({inputs, displayTimes, displayRounds, onClick, onReset, status}) => {
+    return (
+     <PanelStyle>
+      <InputsContainer>
+        {inputs}
+      </InputsContainer>
+      <DisplayContainer>
+        {displayTimes}
+        {displayRounds}
+      </DisplayContainer>
+      <ControlsContainer>
+        <ButtonPanel
+          status={status}
+          onClick={onClick}
+          onReset={onReset}
+        />
+      </ControlsContainer>
+     </PanelStyle>
+   );
+ };
 
  Panel.propTypes = {
    // An array of display round objects

@@ -23,30 +23,27 @@ const Label = styled.span`
   color: ${GENERIC.DISPLAY_TIME.label.color};
 `;
 
-class DisplayTime extends React.Component {
-  render() {
-    // const seconds = 7446; //2hr, 4 min, 6 secs
-    const { seconds, label, active, size } = this.props;
-    const textSize = fontSizeMap[size];
-    // TODO: Move this to Utils area?
-    // Split the seconds into Hour :  Min : Sec
-    const hour = Math.floor(seconds / (60 * 60));
-    const min = Math.floor(seconds % (60 * 60) / 60);
-    const sec = Math.floor(seconds % (60 * 60) % 60);
-    return (
-      <Container
-        size={textSize}
-        activeKey={active ? 'active' : 'inactive'}
-      >
-        {!active && label && <Label>{label}</Label>}
-        {('00' + hour).slice(-2)}
-        :
-        {('00' + min).slice(-2)}
-        :
-        {('00' + sec).slice(-2)}
-      </Container >
-    );
-  }
+const DisplayTime = ({ seconds, label, active, size }) => {
+  // const seconds = 7446; //2hr, 4 min, 6 secs
+  const textSize = fontSizeMap[size];
+  // TODO: Move this to Utils area?
+  // Split the seconds into Hour :  Min : Sec
+  const hour = Math.floor(seconds / (60 * 60));
+  const min = Math.floor(seconds % (60 * 60) / 60);
+  const sec = Math.floor(seconds % (60 * 60) % 60);
+  return (
+    <Container
+      size={textSize}
+      activeKey={active ? 'active' : 'inactive'}
+    >
+      {!active && label && <Label>{label}</Label>}
+      {('00' + hour).slice(-2)}
+      :
+      {('00' + min).slice(-2)}
+      :
+      {('00' + sec).slice(-2)}
+    </Container >
+  );
 };
 
 DisplayTime.propTypes = {

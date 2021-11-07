@@ -39,20 +39,17 @@ const ButtonStyled = styled.input`
     };
 `;
 
-class Button extends React.Component {
-  render() {
-    const {active, text, onClick} = this.props;
-    const size = sizeMapping[this.props.size];
-    return (
-        <ButtonStyled
-          size={size}
-          type="Button"
-          value={text}
-          activeKey={ active ? 'active' : 'inactive' }
-          onClick={onClick}
-        />
-    );
-  }
+const Button = ({ active, text, onClick, size }) => {
+  const sizeMapped = sizeMapping[size];
+  return (
+      <ButtonStyled
+        size={sizeMapped}
+        type="Button"
+        value={text}
+        activeKey={ active ? 'active' : 'inactive' }
+        onClick={onClick}
+      />
+  );
 };
 
 Button.propTypes = {

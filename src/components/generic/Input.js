@@ -32,29 +32,26 @@ const LabelStyled = styled.label`
   text-align: right;
 `;
 
-class Input extends React.Component {
-  render() {
-    const {value, onChange, name, label, maxNum} = this.props;
-    return (
-      <InputContainer>
-        <LabelStyled
-          htmlFor={name}
-        >
-          {label}
-          :
-        </LabelStyled>
-        <InputStyled
-          id={name}
-          name={name}
-          type="number"
-          min="0"
-          max={maxNum}
-          onChange={onChange}
-          value={value > 0 ? value : ""}
-        />
-      </InputContainer>
-    )
-  }
+const Input = ({value, onChange, name, label, maxNum}) => {
+  return (
+    <InputContainer>
+      <LabelStyled
+        htmlFor={name}
+      >
+        {label}
+        :
+      </LabelStyled>
+      <InputStyled
+        id={name}
+        name={name}
+        type="number"
+        min="0"
+        max={maxNum}
+        onChange={onChange}
+        value={value > 0 ? value : ""}
+      />
+    </InputContainer>
+  )
 };
 
 Input.propTypes = {

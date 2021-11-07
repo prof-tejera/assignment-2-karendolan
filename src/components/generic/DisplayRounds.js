@@ -41,31 +41,28 @@ const RoundGroup = styled.div`
   }
 `;
 
-class DisplayRounds extends React.Component {
-  render() {
-    // construct the round row
-    const { numRounds, curRound } = this.props;
-    const dots = Array.from(Array(numRounds), (e,i)=>i+1).map(i => {
-      const isCurRound = (i === curRound);
-      return (
-        <Round
-          size={isCurRound ? sizeMapping.large : sizeMapping.medium}
-          activeKey={isCurRound ? 'active' : 'inactive'}
-          key={i}
-        >
-          {isCurRound && curRound}
-        </Round>
-      );
-    })
-
+const DisplayRounds = ({ numRounds, curRound }) => {
+  // construct the round row
+  const dots = Array.from(Array(numRounds), (e,i)=>i+1).map(i => {
+    const isCurRound = (i === curRound);
     return (
-      <Container>
-        <RoundGroup>
-          {dots}
-        </RoundGroup>
-      </Container>
+      <Round
+        size={isCurRound ? sizeMapping.large : sizeMapping.medium}
+        activeKey={isCurRound ? 'active' : 'inactive'}
+        key={i}
+      >
+        {isCurRound && curRound}
+      </Round>
     );
-  }
+  })
+
+  return (
+    <Container>
+      <RoundGroup>
+        {dots}
+      </RoundGroup>
+    </Container>
+  );
 };
 
 DisplayRounds.propTypes = {
