@@ -1,62 +1,59 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 
-class Countdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seconds: 0,
-      curSecond: 0,
-    };
-  }
+const Countdown = () => {
+  const [seconds, setSeconds] = useState(0);
+  const [curSecond, setCurSecond] = useState(0);
+  const timerTitle = "Stopwatch";
+  const inputs = [
+     <Input
+      onChange={(event) => {
+        const num = parseInt(event.target.value);
+        // The number of seconds to count down
+        setSeconds((num > 0 ? num : 0));
+        // Setting Cur sec because its starts at the top down to 0
+        setCurSecond((num > 0 ? num : 0));
+      }}
+      label="Seconds"
+      name="seconds"
+      value={seconds}
+    />
+  ];
+  // Countdown displays the single count down time
+  const displayTimes = [
+    <DisplayTime
+      seconds={curSecond}
+      size='large'
+      active={true}
+    />
+  ]
 
-  onChange = (event) => {
-    const num = parseInt(event.target.value);
-    this.setState(
-      {seconds: num > 0 ? num : 0,
-      curSecond: num > 0 ? num : 0}
-    );
-  }
+  // Remove the state context
+  useEffect(() => {
+    console.log('OnMount: Total', seconds, 'Current', curSecond);
+    return () => {
+      console.log('Cleanup: Total', seconds, 'Current', curSecond);
+    }
+  })
 
-  render() {
-    const {seconds, curSecond} = this.state;
-    const timerTitle = "Stopwatch";
-    const inputs = [
-         <Input
-          onChange={this.onChange}
-          label="Seconds"
-          name="seconds"
-          value={seconds}
-        />
-    ];
-    // Countdown displays the single count down time
-    const displayTimes = [
-      <DisplayTime
-        seconds={curSecond}
-        size='large'
-        active={true}
+  return (
+    <div>
+      <Panel
+          timerTitle={timerTitle}
+          seconds={seconds}
+          curSecond={curSecond}
+          inputs={inputs}
+          displayTimes={displayTimes}
+          // onStart={onStartHandler}
+          // onStop={onStopHandler}
+          // onPause={onPauseHandler}
       />
-    ]
-
-    return (
-      <div>
-        <Panel
-            timerTitle={timerTitle}
-            seconds={seconds}
-            curSecond={curSecond}
-            inputs={inputs}
-            displayTimes={displayTimes}
-            // onStart={onStartHandler}
-            // onStop={onStopHandler}
-            // onPause={onPauseHandler}
-        />
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Countdown;

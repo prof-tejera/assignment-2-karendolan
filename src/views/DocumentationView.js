@@ -25,29 +25,27 @@ const Title = styled.div`
   font-size: 2rem;
 `;
 
-class Documentation extends React.Component {
-  render() {
-    // compomose the component elements
-    const components = DocList.map(CurrComp => {
-      const {title, props} = CurrComp.docs;
-      return (
-        <DocumentComponent
-          key={title}
-          title= {title}
-          component= <CurrComp />
-          propDocs={props}
-        />
-      )
-    })
+const Documentation = () => {
+  // compomose the component elements
+  const components = DocList.map(CurrComp => {
+    const {title, props} = CurrComp.docs;
     return (
-      <Container>
-        <div>
-          <Title>Documentation</Title>
-          {components}
-        </div>
-      </Container>
-    );
-  }
+      <DocumentComponent
+        key={title}
+        title= {title}
+        component= <CurrComp />
+        propDocs={props}
+      />
+    )
+  })
+  return (
+    <Container>
+      <div>
+        <Title>Documentation</Title>
+        {components}
+      </div>
+    </Container>
+  );
 }
 
 export default Documentation;
