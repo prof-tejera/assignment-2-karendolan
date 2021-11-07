@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React, {useContext, useEffect} from "react";
+import TimerProvider, {TimerContext} from '../utils/TimerProvider';
 
 // Import components
 import Panel from "../generic/Panel";
@@ -6,8 +7,17 @@ import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 
 const Countdown = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [curSecond, setCurSecond] = useState(0);
+  const {
+    curSecond,
+    setCurSecond,
+    seconds,
+    setSeconds,
+    state,
+    setState,
+  } = useContext(TimerContext);
+  // replace all tghese these with context
+  // const [curSecond, setCurSecond] = useState(0);
+  // const [seconds, setSeconds] = useState(0);
   const timerTitle = "Stopwatch";
   const inputs = [
      <Input
@@ -26,7 +36,8 @@ const Countdown = () => {
   // Countdown displays the single count down time
   const displayTimes = [
     <DisplayTime
-      seconds={curSecond}
+      // The time will be provided
+      // seconds={curSecond}
       size='large'
       active={true}
     />
@@ -34,25 +45,28 @@ const Countdown = () => {
 
   // Remove the state context
   useEffect(() => {
-    console.log('OnMount: Total', seconds, 'Current', curSecond);
+    console.log('OnMount: Total', seconds, 'Current', curSecond, 'state', state);
     return () => {
-      console.log('Cleanup: Total', seconds, 'Current', curSecond);
+      console.log('Cleanup: Total', seconds, 'Current', curSecond, 'state', state);
     }
   })
 
   return (
-    <div>
-      <Panel
-          timerTitle={timerTitle}
-          seconds={seconds}
-          curSecond={curSecond}
-          inputs={inputs}
-          displayTimes={displayTimes}
-          // onStart={onStartHandler}
-          // onStop={onStopHandler}
-          // onPause={onPauseHandler}
-      />
-    </div>
+    <TimerProvider>
+      <div>
+        <Panel
+            timerTitle={timerTitle}
+            // The time will be provied
+            // seconds={seconds}
+            // curSecond={curSecond}
+            inputs={inputs}
+            displayTimes={displayTimes}
+            // onStart={onStartHandler}
+            // onStop={onStopHandler}
+            // onPause={onPauseHandler}
+        />
+      </div>
+    </TimerProvider>
   );
 }
 
