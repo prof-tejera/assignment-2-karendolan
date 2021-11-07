@@ -30,37 +30,35 @@ const Documentation = styled.table`
   flex-grow: 1;
 `;
 
-class DocumentComponent extends React.Component {
-  render() {
-    return (
-      <Wrapper>
-        <Title>{this.props.title}</Title>
-        <Container>
-          <RenderComponent>{this.props.component}</RenderComponent>
-          <Documentation>
-            <tr>
-              <th>Prop</th>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Default value</th>
-            </tr>
-            {this.props.propDocs.map((doc) => {
-              return (
-                <tr>
-                  <td>{doc.prop}</td>
-                  <td>{doc.description}</td>
-                  <td>{doc.type}</td>
-                  <td>
-                    <code>{doc.defaultValue}</code>
-                  </td>
-                </tr>
-              );
-            })}
-          </Documentation>
-        </Container>
-      </Wrapper>
-    );
-  }
+const DocumentComponent = ({propDocs, component, title}) => {
+  return (
+    <Wrapper>
+      <Title>{title}</Title>
+      <Container>
+        <RenderComponent>{component}</RenderComponent>
+        <Documentation>
+          <tr>
+            <th>Prop</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Default value</th>
+          </tr>
+          {propDocs.map((doc) => {
+            return (
+              <tr>
+                <td>{doc.prop}</td>
+                <td>{doc.description}</td>
+                <td>{doc.type}</td>
+                <td>
+                  <code>{doc.defaultValue}</code>
+                </td>
+              </tr>
+            );
+          })}
+        </Documentation>
+      </Container>
+    </Wrapper>
+  );
 }
 
 export default DocumentComponent;

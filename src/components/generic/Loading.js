@@ -57,7 +57,7 @@ const DotGroup = styled.div`
 `;
 
 const Loading = ({ color, size }) => {
-  const sizeMapped = sizeMapping[this.props.size];
+  const sizeMapped = sizeMapping[size];
   return (
     <Container>
       <DotGroup>
