@@ -5,7 +5,7 @@ import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 import DisplayRounds from "../generic/DisplayRounds";
-import {STATUS} from "../../utils/helpers"
+import {STATUS} from "../../utils/constants"
 
 const Tabata = () => {
   const [workSecs, setWorkSecs] = useState(0);

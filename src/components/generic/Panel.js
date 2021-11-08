@@ -2,15 +2,21 @@
  * Panel handles layout of the timer
  * It also controls the color palette
  */
- import React from "react";
+ import React, {useContext} from "react";
  import PropTypes from "prop-types";
  import styled from "styled-components";
 
+ // Import the data provider
+ import { TimerContext } from "../../context/TimerProvider";
+
+ // Import components
  import DisplayTime from "./DisplayTime";
  import DisplayRounds from "./DisplayRounds";
  import Input from "./Input";
  import ButtonPanel from "./ButtonPanel";
- import { STATUS } from "../../utils/helpers";
+
+ //import constants and shared
+ import { STATUS } from "../../utils/constants";
  import GENERIC  from "../../shared/COLOR";
 
  const primaryColor =  GENERIC.PANEL.DEFAULT.background;
@@ -48,7 +54,7 @@
     padding: 20px 40px;
   `;
 
- const Panel = ({inputs, displayTimes, displayRounds, onClick, onReset, status}) => {
+ const Panel = ({inputs, displayTimes, displayRounds}) => {
     return (
      <PanelStyle>
       <InputsContainer>
@@ -60,9 +66,10 @@
       </DisplayContainer>
       <ControlsContainer>
         <ButtonPanel
-          status={status}
-          onClick={onClick}
-          onReset={onReset}
+          // It will get from provider
+          // status={status}
+          // onClick={onClick}
+          // onReset={onReset}
         />
       </ControlsContainer>
      </PanelStyle>
@@ -76,16 +83,6 @@
    displayTime: PropTypes.arrayOf(DisplayTime),
    // An Array of input objects
    inputs: PropTypes.arrayOf(Input),
-   // Callback for clicking the primary button
-   onClick: PropTypes.func,
-   // Callback for clicking the reset button
-   onReset: PropTypes.func,
-   // The status of the timer (running, paused, etc)
-   status: PropTypes.oneOf(STATUS),
- };
-
- Panel.defaultProps = {
-    status: STATUS.RESET,
  };
 
  // Class description for the docs
@@ -115,25 +112,11 @@
          defaultValue: "none",
        },
        {
-         prop: 'onClick',
-         key: 'onClick',
-         description: 'Callback for clicking primary button',
-         type: 'function',
-         defaultValue: 'none',
-       },
-       {
-         prop: 'onReset',
-         key: 'onReset',
-         description: 'Callback for clicking reset button',
-         type: 'function',
-         defaultValue: 'none',
-       },
-       {
          prop: 'status',
          key: 'status',
          description: 'Status of the timer',
          type: 'string',
-         defaultValue: Panel.defaultProps.status,
+         defaultValue: "RESET",
        }
      ]
  }

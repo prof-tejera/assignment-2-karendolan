@@ -1,6 +1,9 @@
 import React from "react";
+import TimerProvider from "../context/TimerProvider";
+
 import styled from "styled-components";
 
+// Import the timers
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
@@ -29,14 +32,16 @@ function App() {
   ];
 
   return (
-    <Timers>
-      {timers.map((timer) => (
-        <Timer>
-          <TimerTitle>{timer.title}</TimerTitle>
-          {timer.C}
-        </Timer>
-      ))}
-    </Timers>
+    <TimerProvider>
+      <Timers>
+        {timers.map((timer) => (
+          <Timer>
+            <TimerTitle>{timer.title}</TimerTitle>
+            {timer.C}
+          </Timer>
+        ))}
+      </Timers>
+    </TimerProvider>
   );
 }
 

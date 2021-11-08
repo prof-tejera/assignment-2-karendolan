@@ -23,6 +23,8 @@ const Label = styled.span`
   color: ${GENERIC.DISPLAY_TIME.label.color};
 `;
 
+// Seconds is passed in because this display component is generic and
+// doesn't know which set of seconds to use from the global context.
 const DisplayTime = ({ seconds, label, active, size }) => {
   // const seconds = 7446; //2hr, 4 min, 6 secs
   const textSize = fontSizeMap[size];

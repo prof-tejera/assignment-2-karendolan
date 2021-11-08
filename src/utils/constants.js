@@ -3,8 +3,21 @@
 // everywhere.
 
 export const STATUS = {
-  PAUSED: 'paused',
-  RUNNING: 'running',
-  RESTING: 'resting',
   RESET: 'reset',
+  COUNTDOWN: 'countdown',
+  WORKING: 'working',
+  RESTING: 'resting',
+  PAUSED: 'paused',
+  ENDED: 'ended',
 };
+
+export const RUNNING_STATUS = [
+  STATUS.COUNTDOWN,
+  STATUS.WORKING,
+  STATUS.RESTING,
+];
+
+export const STOPPED_STATUS = [
+  STATUS.RESET,
+  STATUS.PAUSED,
+];

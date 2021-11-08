@@ -1,26 +1,34 @@
-import React, {useState, useEffect} from "react";
+import React, {useContext, useEffect} from "react";
+import TimerProvider, { TimerContext } from "../../context/TimerProvider";
 
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayRounds from "../generic/DisplayRounds";
 import DisplayTime from "../generic/DisplayTime";
-import { STATUS } from "../../utils/helpers"
+import { STATUS } from "../../utils/constants"
 
 const XY = () => {
-  const [workSecs, setWorkSecs] = useState(0);
-  const [rounds, setRounds] = useState(0);
-  const [curSec, setCurSec] = useState(0);
-  const [curRound, setCurRound] = useState(0);
-  const [status, setStatus] = useState(STATUS.RESET);
-
   const timerTitle = "XY";
+  const {
+    curSec,
+    setCurSec,
+    workSecs,
+    setWorkSecs,
+    status,
+    setStatus,
+    rounds,
+    setRounds,
+    curRound,
+    setCurRound,
+  } = useContext(TimerContext);
+
   const inputs = [
      <Input
       onChange={(event) => {
         const num = parseInt(event.target.value);
         // The number of seconds per round
-        workSecs((num > 0 ? num : 0));
+        setWorkSecs((num > 0 ? num : 0));
       }}
       label="Seconds"
       name="work"
@@ -55,14 +63,14 @@ const XY = () => {
   ]
   const displayRounds = [
     <DisplayRounds
-      numRounds={8} //{rounds}
+      numRounds={rounds || 8} //{rounds}
       curRound={curRound || 3} //{curRound}
     />
   ];
 
   // Remove the state context
   useEffect(() => {
-    console.log('OnMount: work', curSec, 'round', curRound);
+    console.log('OnMount: work', curSec, 'round', curRound, 'curSec', curSec);
     return () => {
       console.log('OnMount: work', curSec, 'round', curRound);
     }
@@ -74,7 +82,7 @@ const XY = () => {
     return () => {
       console.log('OnMount: work', curSec, 'round', curRound);
     }
-  }, [status]);
+  }, [curSec, curRound, status]);
 
   return (
     <div>
@@ -86,7 +94,7 @@ const XY = () => {
           inputs={inputs}
           displayTimes={displayTimes}
           onReset={() => setStatus(STATUS.RESET)}
-          onClick={this.onClick}
+          onClick={() => {}}
       />
     </div>
   );
