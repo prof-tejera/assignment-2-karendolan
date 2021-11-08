@@ -27,6 +27,7 @@ const Tabata = () => {
       label="Work seconds"
       name="Work"
       value={workSecs}
+      key="input-total-work-seconds"
     />,
     <Input
      onChange={(event) => {
@@ -36,6 +37,7 @@ const Tabata = () => {
      label="Rest seconds"
      name="rest"
      value={restSecs}
+     key="input-total-rest-seconds"
    />,
    <Input
     onChange={(event) => {
@@ -45,6 +47,7 @@ const Tabata = () => {
     label="Rounds"
     name="rounds"
     value={rounds}
+    key="input-total-rounds"
     />
   ];
   // Countdown displays the single count down time
@@ -52,7 +55,7 @@ const Tabata = () => {
     <DisplayTime
       label={label}
       seconds={seconds}
-      key="1"
+      key="display-total-time"
       active={false}
     />,
     <DisplayTime
@@ -60,6 +63,7 @@ const Tabata = () => {
       seconds={curSec}
       size='large'
       active={true}
+      key="display-countdown-time"
     />
   ];
   const displayRounds = [

@@ -33,7 +33,7 @@ const XY = () => {
       label="Seconds"
       name="work"
       value={workSecs}
-      key="1"
+      key="input-total-work-seconds"
     />,
      <Input
      onChange={(event) => {
@@ -44,27 +44,28 @@ const XY = () => {
       label="Rounds"
       name="rounds"
       value={rounds}
-      key="2"
+      key="input-total-rounds"
     />
   ];
   // Countdown displays the single count down time
   const displayTimes = [
     <DisplayTime
       seconds={workSecs}
-      key="1"
       active={false}
+      key="display-total-time"
     />,
     <DisplayTime
       seconds={curSec}
       size='large'
-      key="2"
       active={true}
+      key="display-countdown-time"
     />
   ]
   const displayRounds = [
     <DisplayRounds
       numRounds={rounds || 8} //{rounds}
       curRound={curRound || 3} //{curRound}
+      key='display-rounds'
     />
   ];
 

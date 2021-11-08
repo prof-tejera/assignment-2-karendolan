@@ -16,8 +16,6 @@ const Stopwatch = () => {
     setIsCountASC,
   } = useContext(TimerContext);
   console.log("isCountASC", isCountASC, "setIsCountASC", setIsCountASC);
-  // Set count direction to be ascending
-  setIsCountASC(true);
   // Create input components
   const inputs = [
      <Input
@@ -25,6 +23,7 @@ const Stopwatch = () => {
         const num = parseInt(event.target.value);
         setWorkSecs((num > 0 ? num : 0));
       }}
+      key="input-total-seconds"
       label="End seconds"
       name="seconds"
       value={workSecs}
@@ -37,13 +36,18 @@ const Stopwatch = () => {
       label=""
       seconds={workSecs}
       active={false}
+      key="display-total-seconds"
     />,
     <DisplayTime
       seconds={curSec}
       size='large'
       active={true}
+      key="display-current-seconds"
     />
   ]
+
+  //  // Set count direction to be ascending
+  //   setIsCountASC(true);  <-- in useEffect!!
   // The Return Rendered componet
   return (
     <div>

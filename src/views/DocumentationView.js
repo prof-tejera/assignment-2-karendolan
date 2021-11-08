@@ -33,7 +33,7 @@ const Documentation = () => {
       <DocumentComponent
         key={title}
         title= {title}
-        component= <CurrComp />
+        component={<CurrComp />}
         propDocs={props}
       />
     )

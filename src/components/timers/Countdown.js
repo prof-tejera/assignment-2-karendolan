@@ -26,6 +26,7 @@ const Countdown = () => {
       label="Seconds"
       name="seconds"
       value={workSecs}
+      key="input-total-seconds"
     />
   ];
   // Countdown displays the single count down time
@@ -33,8 +34,9 @@ const Countdown = () => {
     <DisplayTime
       // The time will be provided
       // seconds={curSecond}
-      size='large'
+      size="large"
       active={true}
+      key="display-current-seconds"
     />
   ]
 

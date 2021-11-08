@@ -12,7 +12,7 @@ const sizeMapping = {
 
 // Make rounded corner button, but not as round as the RoundsDisplay
 // Add different style for hover and active (click) to emphasize user action
-const ButtonStyled = styled.input`
+const ButtonStyled = styled.button`
   display: block;
   width: ${(props) => props.size}px;
   height: 60px;

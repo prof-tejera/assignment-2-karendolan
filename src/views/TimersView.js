@@ -35,7 +35,9 @@ function App() {
     <TimerProvider>
       <Timers>
         {timers.map((timer) => (
-          <Timer>
+          <Timer
+            key={timer.title}
+          >
             <TimerTitle>{timer.title}</TimerTitle>
             {timer.C}
           </Timer>
