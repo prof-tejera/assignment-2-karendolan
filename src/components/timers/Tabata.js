@@ -9,13 +9,10 @@ import DisplayTime from "../generic/DisplayTime";
 import DisplayRounds from "../generic/DisplayRounds";
 import ConfettiOverlay from "../generic/ConfettiOverlay";
 
-//import {STATUS} from "../../utils/constants"
-
 const Tabata = () => {
   const timerTitle = "Tabata";
   const {
     curSec,
-    setCurSec,
     workSecs,
     setWorkSecs,
     restSecs,
@@ -23,10 +20,8 @@ const Tabata = () => {
     rounds,
     setRounds,
     curRound,
-    setCurRound,
     setIsCountASC,
     isResting,
-    isWorking,
     isEnded,
   } = useContext(TimerContext);
 
@@ -34,7 +29,7 @@ const Tabata = () => {
 
   // The amount of total secs in current Tabata segment
   const seconds = isResting() ? restSecs : workSecs;
-  const label = isResting() ? 'Rest' : 'Work';
+  const label = isResting() ? 'Resting for' : 'Working for';
   const inputs = [
     <Input
       onChange={(event) => {

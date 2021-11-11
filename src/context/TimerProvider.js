@@ -36,16 +36,30 @@ const TimerProvider = ({children}) => {
 
   // ------- Start crazy counter --------- //
 
+  /**
+   * Crazy counter
+   */
   const callback = () => {
-    const endSec = isCountASC ? workSecs : 0;
+    const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;
     if (curSec === endSec) {
-      if (curRound === rounds) {
-        end();
+      if (isWorking()) {
+        if (curRound === rounds) {
+          // Ends on a work round
+          end();
+        } else if (restSecs > 0) {
+          // set resting period
+          setStatus(STATUS.RESTING);
+          setCurSec(c => isCountASC ? 0 : restSecs);
+        } else {
+          // increment the round
+          setCurRound(r => r + 1);
+        }
       } else {
-        // round is always ascending, in this version of the app
-        setCurRound(r => r + 1);
-        // reset seconds for this round
+        // Switch from resting to working
+        setStatus(STATUS.WORKING);
         setCurSec(c => isCountASC ? 0 : workSecs);
+        // rounds end on a work round
+        setCurRound(r => r + 1);
       }
     } else {
       setCurSec(c => isCountASC ? c + 1 : c - 1);
@@ -69,7 +83,6 @@ const TimerProvider = ({children}) => {
   // ------- End crazy counter --------- //
 
   const isRunning = () => {
-    console.log('KAREN provider - status', status, 'isRunning', RUNNING_STATUS.includes(status));
     return RUNNING_STATUS.includes(status);
   }
 
@@ -86,11 +99,11 @@ const TimerProvider = ({children}) => {
   }
 
   const isResting = () => {
-    return status === STATUS.REST;
+    return status === STATUS.RESTING;
   }
 
   const isWorking = () => {
-    return status === STATUS.WORK;
+    return status === STATUS.WORKING;
   }
 
   const work = () => {
@@ -107,7 +120,6 @@ const TimerProvider = ({children}) => {
   }
 
   const pause = () => {
-    console.log('KAREN provier - pause');
     setStatus(STATUS.PAUSED);
     _stopInterval();
   }
@@ -118,7 +130,6 @@ const TimerProvider = ({children}) => {
     setStatus(STATUS.ENDED);
     setCurRound(rounds);
     // assume ending on work vs rest
-    console.log('KAREN end - isCountASC', isCountASC, 'workSecs', workSecs);
     setCurSec(isCountASC ? workSecs : 0);
   }
 

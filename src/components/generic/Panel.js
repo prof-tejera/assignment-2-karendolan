@@ -2,12 +2,9 @@
  * Panel handles layout of the timer
  * It also controls the color palette
  */
- import React, {useContext} from "react";
+ import React from "react";
  import PropTypes from "prop-types";
  import styled from "styled-components";
-
- // Import the data provider
- import { TimerContext } from "../../context/TimerProvider";
 
  // Import components
  import DisplayTime from "./DisplayTime";
