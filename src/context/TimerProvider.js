@@ -1,6 +1,6 @@
 import React, {createContext, useRef, useState} from 'react';
 // Import helper
-import { STATUS, RUNNING_STATUS, STOPPED_STATUS } from '../utils/constants';
+import { STATUS, RUNNING_STATUS } from '../utils/constants';
 // Crete a Timer context with default empty
 export const TimerContext = createContext({});
 /**
@@ -37,7 +37,12 @@ const TimerProvider = ({children}) => {
   // ------- Start crazy counter --------- //
 
   const callback = () => {
-    setCurSec(c => isCountASC ? c + 1 : c - 1);
+    const endTime = isCountASC ? workSecs : 0;
+    if (curSec === endTime) {
+      end();
+    } else {
+      setCurSec(c => isCountASC ? c + 1 : c - 1);
+    }
   }
   savedCallback.current = callback;
 
@@ -57,11 +62,20 @@ const TimerProvider = ({children}) => {
   // ------- End crazy counter --------- //
 
   const isRunning = () => {
-    return RUNNING_STATUS.contains(status);
+    console.log('KAREN provider - status', status, 'isRunning', RUNNING_STATUS.includes(status));
+    return RUNNING_STATUS.includes(status);
   }
 
-  const isStopped = () => {
-    return STOPPED_STATUS.contains(status);
+  const isPaused = () => {
+    return status === STATUS.PAUSED;
+  }
+
+  const isEnded = () => {
+    return status === STATUS.ENDED;
+  }
+
+  const isReset = () => {
+    return status === STATUS.RESET;
   }
 
   const work = () => {
@@ -78,16 +92,18 @@ const TimerProvider = ({children}) => {
   }
 
   const pause = () => {
-    setStatus(STATUS.PAUSE);
+    console.log('KAREN provier - pause');
+    setStatus(STATUS.PAUSED);
     _stopInterval();
   }
 
   const end = () => {
     _stopInterval();
+    // This fires off the fireworks!!
+    setStatus(STATUS.ENDED);
     setCurRound(rounds);
     // assume ending on work vs rest
     setCurSec(isCountASC ? workSecs : 0);
-    setStatus(STATUS.END);
   }
 
   const resetStart = () => {
@@ -134,7 +150,9 @@ const TimerProvider = ({children}) => {
          resetStart,
          resetAll,
          isRunning,
-         isStopped,
+         isPaused,
+         isEnded,
+         isReset,
        }}>
       {children}
     </TimerContext.Provider>

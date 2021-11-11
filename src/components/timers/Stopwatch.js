@@ -1,9 +1,11 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useRef} from "react";
+
 
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
+import ConfettiOverlay from "../generic/ConfettiOverlay";
 import { TimerContext } from "../../context/TimerProvider";
 
 const Stopwatch = () => {
@@ -12,16 +14,23 @@ const Stopwatch = () => {
     curSec,
     workSecs,
     setWorkSecs,
-    isCountASC,
     setIsCountASC,
+    status,
+    isEnded,
   } = useContext(TimerContext);
-  console.log("isCountASC", isCountASC, "setIsCountASC", setIsCountASC);
+
+  // const confetti = useRef(undefined);
+
+  console.log('KAREN stopwatch - render, workSecs', workSecs, 'curSec', curSec);
   // Create input components
   const inputs = [
      <Input
       onChange={(event) => {
-        const num = parseInt(event.target.value);
-        setWorkSecs((num > 0 ? num : 0));
+        console.log('KAREN stopwatch - Input onChange event:', event);
+        if (event && event.target) {
+          const num = parseInt(event.target.value);
+          setWorkSecs((num > 0 ? num : 0));
+        }
       }}
       key="input-total-seconds"
       label="End seconds"
@@ -44,10 +53,22 @@ const Stopwatch = () => {
       active={true}
       key="display-current-seconds"
     />
-  ]
+  ];
 
-  //  // Set count direction to be ascending
-  //   setIsCountASC(true);  <-- in useEffect!!
+  // Set static timer direction state on load
+  useEffect(() => {
+    setIsCountASC(true);
+  }, [setIsCountASC]);
+
+  useEffect(() => {
+    console.log('KAREN stopwatch - status is ', status);
+  }, [status]);
+
+  let confetti;
+  if (isEnded()) {
+    confetti = (<ConfettiOverlay />);
+  };
+
   // The Return Rendered componet
   return (
     <div>
@@ -61,6 +82,7 @@ const Stopwatch = () => {
           // onStop={onStopHandler}
           // onPause={onPauseHandler}
       />
+    {confetti}
     </div>
   );
 }

@@ -45,10 +45,13 @@ const Button = ({ active, text, onClick, size }) => {
       <ButtonStyled
         size={sizeMapped}
         type="Button"
+        defaultValue={text}
         value={text}
         activeKey={ active ? 'active' : 'inactive' }
         onClick={onClick}
-      />
+      >
+        {text}
+      </ButtonStyled>
   );
 };
 
@@ -72,7 +75,7 @@ Button.defaultProps = {
 // Class description for the docs
 Button.docs =   {
     title: 'Button ',
-    component: <Button onClick={()=>{}} />,
+    component: <Button defaultValue="" onClick={()=>{}} />,
     props: [
       {
         prop: 'active',

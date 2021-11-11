@@ -7,7 +7,7 @@ const COLOR = {
   primary0: { color: '#433075' },	/* Main Primary color */
   primary1: { color: '#897BAF' },
   primary2: { color: '#635192' },
-  primary3: { color: '#291758' },
+  primary3: { color: '#291758' }, /* Darkest */
   primary4: { color: '#15073B' },
   primaryLightest: {color: '#B8AFCF'},
 
@@ -61,12 +61,17 @@ const GENERIC = {
     }
   },
   INPUT: {
-    color: COLOR.primaryLightest.color,
-    background: COLOR.primaryLightest.color,
+    DEFAULT: {
+      color: COLOR.primary3.color,
+      background: COLOR.primaryLightest.color,
+    },
+    LABEL: {
+      color: COLOR.primaryLightest.color,
+    }
   },
   PANEL: {
     DEFAULT:{
-      color: COLOR.primary1.color,
+      color: COLOR.primary0.color,
       background: COLOR.primary1.color,
     },
     INPUT:{

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import GENERIC  from "../../shared/COLOR";
 
-const primaryColor =  GENERIC.INPUT.background;
+const primaryColor =  GENERIC.INPUT.DEFAULT.background;
 
 const InputContainer = styled.div`
   display: flex;
@@ -17,8 +17,9 @@ const InputStyled = styled.input`
   flex: 1;
   padding: 5px 10px;
   width: 80px;
-  text-align: left;
+  text-align: right;
   text-decoration: none;
+  font-weight: bold;
   color: ${GENERIC.INPUT.color};
   background-color: ${primaryColor};
   border-width: medium;
@@ -28,11 +29,16 @@ const InputStyled = styled.input`
 
 const LabelStyled = styled.label`
   flex: 1;
-  color: ${GENERIC.INPUT.color};
+  color: ${GENERIC.INPUT.LABEL.color};
   text-align: right;
 `;
 
+// The Generic Input cannot use a Timer context because the component is
+// too generic. The values it updates are variable in the
+// context (rounds, work secs, rest secs, etc). The context of the iput is
+// controlled at the timer level.
 const Input = ({value, onChange, name, label, maxNum}) => {
+  console.log('KAREN input -Input update value', value, 'onChange', onChange);
   return (
     <InputContainer>
       <LabelStyled
@@ -48,7 +54,9 @@ const Input = ({value, onChange, name, label, maxNum}) => {
         min="0"
         max={maxNum}
         onChange={onChange}
-        value={value > 0 ? value : ""}
+        autocomplete="off"
+        placeholder={0}
+        value={value}
       />
     </InputContainer>
   )
@@ -78,7 +86,7 @@ Input.defaultProps = {
 // Class description for the docs
 Input.docs =   {
     title: 'Input ',
-    component: <Input  onChange={()=>{}} />,
+    component: <Input defaultValue="" onChange={(event)=>{}} />,
     props: [
       {
         prop: 'name',

@@ -70,6 +70,7 @@ const Tabata = () => {
     <DisplayRounds
         numRounds={rounds || 4} //TODO: remove temp count
         curRound={curRound || 3} //TODO: remove temp count
+        key='display-round'
       />
     ];
 

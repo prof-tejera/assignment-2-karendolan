@@ -55,6 +55,7 @@
   `;
 
  const Panel = ({inputs, displayTimes, displayRounds}) => {
+    console.log('KAREN  panel - rerendering')
     return (
      <PanelStyle>
       <InputsContainer>
