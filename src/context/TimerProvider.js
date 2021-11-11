@@ -103,6 +103,7 @@ const TimerProvider = ({children}) => {
     setStatus(STATUS.ENDED);
     setCurRound(rounds);
     // assume ending on work vs rest
+    console.log('KAREN end - isCountASC', isCountASC, 'workSecs', workSecs);
     setCurSec(isCountASC ? workSecs : 0);
   }
 

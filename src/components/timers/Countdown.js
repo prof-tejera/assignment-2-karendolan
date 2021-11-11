@@ -3,6 +3,7 @@ import { TimerContext } from "../../context/TimerProvider";
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
+import ConfettiOverlay from "../generic/ConfettiOverlay";
 import DisplayTime from "../generic/DisplayTime";
 
 const Countdown = () => {
@@ -10,8 +11,9 @@ const Countdown = () => {
     curSec,
     workSecs,
     setWorkSecs,
-    state,
-    end,
+    setCurSec,
+    setIsCountASC,
+    isEnded,
   } = useContext(TimerContext);
   const timerTitle = "Stopwatch";
   const inputs = [
@@ -21,7 +23,7 @@ const Countdown = () => {
         // The number of seconds to count down
         setWorkSecs((num > 0 ? num : 0));
         // Setting Cur sec because its starts at the top down to 0
-        setWorkSecs((num > 0 ? num : 0));
+        setCurSec((num > 0 ? num : 0));
       }}
       label="Seconds"
       name="seconds"
@@ -32,24 +34,22 @@ const Countdown = () => {
   // Countdown displays the single count down time
   const displayTimes = [
     <DisplayTime
-      // The time will be provided
-      // seconds={curSecond}
+      seconds={curSec}
       size="large"
       active={true}
       key="display-current-seconds"
     />
   ]
 
-  // Remove the state context
+  // Set static timer direction state on load
   useEffect(() => {
-    console.log('OnMount: Total', workSecs, 'Current', curSec, 'state', state);
-    if (curSec === 0) {
-      end();
-    }
-    return () => {
-      console.log('Cleanup: Total', workSecs, 'Current', curSec, 'state', state);
-    }
-  }, [curSec, workSecs, state, end]);
+    setIsCountASC(false);
+  }, [setIsCountASC]);
+
+  let confetti;
+  if (isEnded()) {
+    confetti = (<ConfettiOverlay />);
+  };
 
   return (
     <div>
@@ -64,6 +64,7 @@ const Countdown = () => {
           // onStop={onStopHandler}
           // onPause={onPauseHandler}
       />
+    {confetti}
     </div>
   );
 }

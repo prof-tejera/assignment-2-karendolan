@@ -25,8 +25,8 @@ const TimerTitle = styled.div``;
 
 function App() {
   const timers = [
-    { title: "Stopwatch", C: <Stopwatch /> },
-    //{ title: "Countdown", C: <Countdown /> },
+    //{ title: "Stopwatch", C: <Stopwatch /> },
+    { title: "Countdown", C: <Countdown /> },
     //{ title: "XY", C: <XY /> },
     //{ title: "Tabata", C: <Tabata /> },
   ];
