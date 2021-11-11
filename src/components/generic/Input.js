@@ -38,7 +38,6 @@ const LabelStyled = styled.label`
 // context (rounds, work secs, rest secs, etc). The context of the iput is
 // controlled at the timer level.
 const Input = ({value, onChange, name, label, maxNum}) => {
-  console.log('KAREN input -Input update value', value, 'onChange', onChange);
   return (
     <InputContainer>
       <LabelStyled
@@ -86,7 +85,7 @@ Input.defaultProps = {
 // Class description for the docs
 Input.docs =   {
     title: 'Input ',
-    component: <Input defaultValue="" onChange={(event)=>{}} />,
+    component: <Input defaultValue="" onChange={()=>{}} />,
     props: [
       {
         prop: 'name',

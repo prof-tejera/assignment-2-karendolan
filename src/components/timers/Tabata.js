@@ -29,7 +29,7 @@ const Tabata = () => {
 
   // The amount of total secs in current Tabata segment
   const seconds = isResting() ? restSecs : workSecs;
-  const label = isResting() ? 'Resting for' : 'Working for';
+  const label = isResting() ? 'Resting' : 'Working';
   const inputs = [
     <Input
       onChange={(event) => {
@@ -101,8 +101,6 @@ const Tabata = () => {
       <div>
         <Panel
             timerTitle={timerTitle}
-            seconds={seconds}
-            curSecond={curSec}
             inputs={inputs}
             displayTimes={displayTimes}
             displayRounds={displayRounds}

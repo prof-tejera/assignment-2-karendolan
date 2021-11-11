@@ -19,6 +19,8 @@ const TimerProvider = ({children}) => {
   const [rounds, setRounds] = useState(0);
   // the current round state of the timer
   const [curRound, setCurRound] = useState(0);
+  // Keep track if wasResting before pause
+  const [wasResting, setWasResting] = useState(0);
   // The direction of the current counter, defaults descending
   // "[...] a significant increase (p=.007) in motivation
   // was measured when a descending timer was used.
@@ -72,7 +74,7 @@ const TimerProvider = ({children}) => {
     _stopInterval();
     interval.current = setInterval(() => {
       return (savedCallback.current(), 100000);
-    });
+    }, 1000);
   }
   const _stopInterval = () => {
     if (interval.current) {
@@ -107,7 +109,9 @@ const TimerProvider = ({children}) => {
   }
 
   const work = () => {
-    setStatus(STATUS.WORKING);
+    setCurSec(isPaused ? curSec : (isCountASC ? workSecs : 0));
+    setStatus(wasResting ? STATUS.RESETING : STATUS.WORKING);
+    setCurRound(curSec === 0 && rounds > 0 && curRound === 0 ? 1 : curRound);
     _startInterval();
   }
 
@@ -120,6 +124,7 @@ const TimerProvider = ({children}) => {
   }
 
   const pause = () => {
+    setWasResting(isWorking());
     setStatus(STATUS.PAUSED);
     _stopInterval();
   }
@@ -128,20 +133,23 @@ const TimerProvider = ({children}) => {
     _stopInterval();
     // This fires off the fireworks!!
     setStatus(STATUS.ENDED);
+    setWasResting(false);
     setCurRound(rounds);
-    // assume ending on work vs rest
+    // Ending on work secs vs rest
     setCurSec(isCountASC ? workSecs : 0);
   }
 
   const resetStart = () => {
     _stopInterval();
+    setWasResting(false);
     setCurSec(isCountASC ? 0 : workSecs);
-    setCurRound(0);
+    setCurRound(rounds > 0 ? 1 : 0);
     setStatus(STATUS.RESET);
   }
 
   const resetAll = () => {
     _stopInterval();
+    setWasResting(false);
     setCurSec(0);
     setWorkSecs(0);
     setRestSecs(0);

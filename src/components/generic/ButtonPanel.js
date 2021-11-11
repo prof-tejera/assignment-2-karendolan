@@ -27,28 +27,23 @@ const ButtonPanel = () => {
     isReset,
   } = useContext(TimerContext);
 
-  console.log('KAREN button panel - isRunning', isRunning());
-
   const resetButtonFunc = isRunning() ? end : (isReset() ? resetAll : resetStart);
   const workButtonFunc = isRunning() ? pause : work;
 
   return (
     <Container>
-    <Button
-      size='large'
-      active={false}
-      text={(isRunning() ? 'End' : (isReset() ? 'Clear' : 'Reset'))}
-      onClick={resetButtonFunc}
-    />
-    <Button
-      size='large'
-      active={true}
-      // TODO: fix this text, for skipping to end
-      // TODO: timer has a effect for state change to stop or start timer
-      // or, timer is an independant component
-      text={(isRunning() ? 'Pause' : (isPaused() ? 'Resume' : 'Start'))}
-      onClick={workButtonFunc}
-    />
+      <Button
+        size='large'
+        active={false}
+        text={(isRunning() ? 'End' : (isReset() ? 'Clear' : 'Reset'))}
+        onClick={resetButtonFunc}
+      />
+      <Button
+        size='large'
+        active={true}
+        text={(isRunning() ? 'Pause' : (isPaused() ? 'Resume' : 'Start'))}
+        onClick={workButtonFunc}
+      />
     </Container>
   )
 };

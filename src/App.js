@@ -5,6 +5,10 @@ import styled from "styled-components";
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
 
+// Timer Provider
+import TimerProvider from "./context/TimerProvider";
+
+
 const Container = styled.div`
   background: #f0f6fb;
   height: 100vh;
@@ -33,7 +37,9 @@ function App() {
             <DocumentationView />
           </Route>
           <Route path="/">
-            <TimersView />
+            <TimerProvider>
+              <TimersView />
+            </TimerProvider>
           </Route>
         </Switch>
       </Router>

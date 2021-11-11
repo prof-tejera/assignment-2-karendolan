@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import DocumentComponent from "../components/documentation/DocumentComponent";
+import TimerProvider from "../context/TimerProvider";
 
 // Components to describe
 import Loading from "../components/generic/Loading";
@@ -28,12 +29,12 @@ const Title = styled.div`
 const Documentation = () => {
   // compomose the component elements
   const components = DocList.map(CurrComp => {
-    const {title, props} = CurrComp.docs;
+    const {title, component, props} = CurrComp.docs;
     return (
       <DocumentComponent
         key={title}
         title= {title}
-        component={<CurrComp />}
+        component={component}
         propDocs={props}
       />
     )
@@ -42,7 +43,9 @@ const Documentation = () => {
     <Container>
       <div>
         <Title>Documentation</Title>
-        {components}
+        <TimerProvider>
+          {components}
+        </TimerProvider>
       </div>
     </Container>
   );
