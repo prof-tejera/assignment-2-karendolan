@@ -16,7 +16,6 @@
  import ButtonPanel from "./ButtonPanel";
 
  //import constants and shared
- import { STATUS } from "../../utils/constants";
  import GENERIC  from "../../shared/COLOR";
 
  const primaryColor =  GENERIC.PANEL.DEFAULT.background;
@@ -54,6 +53,9 @@
     padding: 20px 40px;
   `;
 
+  /**
+   * the Panel function
+   */
  const Panel = ({inputs, displayTimes, displayRounds}) => {
     console.log('KAREN  panel - rerendering')
     return (
@@ -66,12 +68,7 @@
         {displayRounds}
       </DisplayContainer>
       <ControlsContainer>
-        <ButtonPanel
-          // It will get from provider
-          // status={status}
-          // onClick={onClick}
-          // onReset={onReset}
-        />
+        <ButtonPanel/>
       </ControlsContainer>
      </PanelStyle>
    );

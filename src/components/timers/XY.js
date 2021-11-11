@@ -1,26 +1,25 @@
 import React, {useContext, useEffect} from "react";
-import TimerProvider, { TimerContext } from "../../context/TimerProvider";
+import { TimerContext } from "../../context/TimerProvider";
 
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayRounds from "../generic/DisplayRounds";
 import DisplayTime from "../generic/DisplayTime";
-import { STATUS } from "../../utils/constants"
+import ConfettiOverlay from "../generic/ConfettiOverlay";
 
 const XY = () => {
   const timerTitle = "XY";
   const {
     curSec,
-    setCurSec,
     workSecs,
     setWorkSecs,
     status,
-    setStatus,
     rounds,
     setRounds,
     curRound,
-    setCurRound,
+    setIsCountASC,
+    isEnded,
   } = useContext(TimerContext);
 
   const inputs = [
@@ -63,8 +62,8 @@ const XY = () => {
   ]
   const displayRounds = [
     <DisplayRounds
-      numRounds={rounds || 8} //{rounds}
-      curRound={curRound || 3} //{curRound}
+      numRounds={rounds}
+      curRound={curRound}
       key='display-rounds'
     />
   ];
@@ -85,18 +84,25 @@ const XY = () => {
     }
   }, [curSec, curRound, status]);
 
+  // Set static timer direction state on load
+  useEffect(() => {
+    setIsCountASC(false);
+  }, [setIsCountASC]);
+
+  let confetti;
+  if (isEnded()) {
+    confetti = (<ConfettiOverlay />);
+  };
+
   return (
     <div>
       <Panel
           timerTitle={timerTitle}
-          seconds={workSecs}
-          curSecond={curSec}
           displayRounds={displayRounds}
           inputs={inputs}
           displayTimes={displayTimes}
-          onReset={() => setStatus(STATUS.RESET)}
-          onClick={() => {}}
       />
+    {confetti}
     </div>
   );
 }

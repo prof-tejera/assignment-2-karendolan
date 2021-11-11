@@ -42,6 +42,11 @@ const RoundGroup = styled.div`
 `;
 
 const DisplayRounds = ({ numRounds, curRound }) => {
+
+
+  console.log('KAREN tabata curRound', curRound, 'rounds', numRounds);
+
+
   // construct the round row
   const dots = Array.from(Array(numRounds), (e,i)=>i+1).map(i => {
     const isCurRound = (i === curRound);
@@ -73,8 +78,8 @@ DisplayRounds.propTypes = {
 };
 
 DisplayRounds.defaultProps = {
-  curRound: 3,
-  numRounds: 4,
+  curRound: 0,
+  numRounds: 0,
 };
 
 // Class description for the docs

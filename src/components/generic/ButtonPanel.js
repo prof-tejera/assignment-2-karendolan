@@ -6,7 +6,6 @@ import styled from "styled-components";
 
 // Import the data provider
 import { TimerContext } from "../../context/TimerProvider";
-import { STATUS } from "../../utils/constants"
 
 import Button from "./Button";
 

@@ -1,5 +1,4 @@
-import React, {useContext, useEffect, useRef} from "react";
-
+import React, {useContext, useEffect} from "react";
 
 // Import components
 import Panel from "../generic/Panel";
@@ -15,18 +14,13 @@ const Stopwatch = () => {
     workSecs,
     setWorkSecs,
     setIsCountASC,
-    status,
     isEnded,
   } = useContext(TimerContext);
 
-  // const confetti = useRef(undefined);
-
-  console.log('KAREN stopwatch - render, workSecs', workSecs, 'curSec', curSec);
   // Create input components
   const inputs = [
      <Input
       onChange={(event) => {
-        console.log('KAREN stopwatch - Input onChange event:', event);
         if (event && event.target) {
           const num = parseInt(event.target.value);
           setWorkSecs((num > 0 ? num : 0));
@@ -60,10 +54,7 @@ const Stopwatch = () => {
     setIsCountASC(true);
   }, [setIsCountASC]);
 
-  useEffect(() => {
-    console.log('KAREN stopwatch - status is ', status);
-  }, [status]);
-
+  // Celebrate ending!
   let confetti;
   if (isEnded()) {
     confetti = (<ConfettiOverlay />);
@@ -73,14 +64,9 @@ const Stopwatch = () => {
   return (
     <div>
       <Panel
-          displayTimes={displayTimes}
-          timerTitle={timerTitle}
-          // seconds={curSec}
-          // curSecond={curSecond}
-          inputs={inputs}
-          // onStart={onStartHandler}
-          // onStop={onStopHandler}
-          // onPause={onPauseHandler}
+        displayTimes={displayTimes}
+        timerTitle={timerTitle}
+        inputs={inputs}
       />
     {confetti}
     </div>

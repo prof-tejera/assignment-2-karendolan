@@ -37,9 +37,16 @@ const TimerProvider = ({children}) => {
   // ------- Start crazy counter --------- //
 
   const callback = () => {
-    const endTime = isCountASC ? workSecs : 0;
-    if (curSec === endTime) {
-      end();
+    const endSec = isCountASC ? workSecs : 0;
+    if (curSec === endSec) {
+      if (curRound === rounds) {
+        end();
+      } else {
+        // round is always ascending, in this version of the app
+        setCurRound(r => r + 1);
+        // reset seconds for this round
+        setCurSec(c => isCountASC ? 0 : workSecs);
+      }
     } else {
       setCurSec(c => isCountASC ? c + 1 : c - 1);
     }
@@ -50,7 +57,7 @@ const TimerProvider = ({children}) => {
     // Safety check that existing interval is gone
     _stopInterval();
     interval.current = setInterval(() => {
-      return (savedCallback.current(), 1000);
+      return (savedCallback.current(), 100000);
     });
   }
   const _stopInterval = () => {
@@ -76,6 +83,14 @@ const TimerProvider = ({children}) => {
 
   const isReset = () => {
     return status === STATUS.RESET;
+  }
+
+  const isResting = () => {
+    return status === STATUS.REST;
+  }
+
+  const isWorking = () => {
+    return status === STATUS.WORK;
   }
 
   const work = () => {
@@ -153,6 +168,8 @@ const TimerProvider = ({children}) => {
          isRunning,
          isPaused,
          isEnded,
+         isResting,
+         isWorking,
          isReset,
        }}>
       {children}

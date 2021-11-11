@@ -1,23 +1,40 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect} from "react";
+
+import { TimerContext } from "../../context/TimerProvider";
 
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 import DisplayRounds from "../generic/DisplayRounds";
-import {STATUS} from "../../utils/constants"
+import ConfettiOverlay from "../generic/ConfettiOverlay";
+
+//import {STATUS} from "../../utils/constants"
 
 const Tabata = () => {
-  const [workSecs, setWorkSecs] = useState(0);
-  const [restSecs, setRestSecs] = useState(0);
-  const [rounds, setRounds] = useState(0);
-  const [curSec, setCurSec] = useState(0);
-  const [curRound, setCurRound] = useState(0);
-  const [status, setStatus] = useState(STATUS.RESET);
   const timerTitle = "Tabata";
+  const {
+    curSec,
+    setCurSec,
+    workSecs,
+    setWorkSecs,
+    restSecs,
+    setRestSecs,
+    rounds,
+    setRounds,
+    curRound,
+    setCurRound,
+    setIsCountASC,
+    isResting,
+    isWorking,
+    isEnded,
+  } = useContext(TimerContext);
+
+  console.log('KAREN tabata curRound', curRound, 'rounds', rounds);
+
   // The amount of total secs in current Tabata segment
-  const seconds =  status === STATUS.RESTING ? restSecs : workSecs;
-  const label = status === STATUS.RESTING ? 'Rest' : 'Work';
+  const seconds = isResting() ? restSecs : workSecs;
+  const label = isResting() ? 'Rest' : 'Work';
   const inputs = [
     <Input
       onChange={(event) => {
@@ -68,12 +85,23 @@ const Tabata = () => {
   ];
   const displayRounds = [
     <DisplayRounds
-        numRounds={rounds || 4} //TODO: remove temp count
-        curRound={curRound || 3} //TODO: remove temp count
+        numRounds={rounds}
+        curRound={curRound}
         key='display-round'
       />
     ];
 
+    // Set static timer direction state on load
+    useEffect(() => {
+      setIsCountASC(false);
+    }, [setIsCountASC]);
+
+    let confetti;
+    if (isEnded()) {
+      confetti = (<ConfettiOverlay />);
+    };
+
+    // Render!
     return (
       <div>
         <Panel
@@ -84,6 +112,7 @@ const Tabata = () => {
             displayTimes={displayTimes}
             displayRounds={displayRounds}
         />
+      {confetti}
       </div>
     );
 }
