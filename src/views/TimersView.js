@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useState} from "react";
 
 import styled from "styled-components";
 
@@ -8,7 +8,7 @@ import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
 import Tabata from "../components/timers/Tabata";
 
-import Button from "./generic/Button";
+import Button from "../components/generic/Button";
 
 const Timers = styled.div`
   display: flex;
@@ -31,50 +31,54 @@ const Container = styled.div`
 const TimerTitle = styled.div``;
 
 function App() {
-  const curTimer = useRef(undefined);
+  //const curTimer = useRef(undefined);
+  const [curTimer, setCurTimer] = useState(0);
 
-  const timers = {
-    stopwatch: { title: "Stopwatch", C: <Stopwatch /> },
-    countdown: { title: "Countdown", C: <Countdown /> },
-    xy: { title: "XY", C: <XY /> },
-    tabata: { title: "Tabata", C: <Tabata /> },
+  const timers = [
+    { title: "Stopwatch", C: <Stopwatch /> },
+    { title: "Countdown", C: <Countdown /> },
+    { title: "XY", C: <XY /> },
+    { title: "Tabata", C: <Tabata /> },
+  ]
+
+  // previous timer end, current timer load? via effect?
+  const chooseTimer = (timer) => {
+    console.log('KAREN Choosing timer', timer.title);
+    setCurTimer(timer);
   };
 
-  //import Confetti from 'react-confetti'
-  const timer = timers[curTimer];
-
-  <Container>
-    <Button
-      size='large'
-      active={false}
-      text={(isRunning() ? 'End' : (isReset() ? 'Clear' : 'Reset'))}
-      onClick={resetButtonFunc}
-    />
-    <Button
-      size='large'
-      active={true}
-      text={(isRunning() ? 'Pause' : (isPaused() ? 'Resume' : 'Start'))}
-      onClick={workButtonFunc}
-    />
-  </Container>
+  const timerElems = timers.map(timer => {
+    return (
+      <Button
+        key={timer.title}
+        size='large'
+        active={true}
+        text={timer.title}
+        onClick={() => chooseTimer(timer)}
+      />
+    )
+  })
 
   return (
     <Timers>
       <div>
         <h1>Timers</h1>
-
       </div>
-      { timer &&
-        <Timer
-          key={timer.title}
-        >
-          <TimerTitle>{timer.title}</TimerTitle>
-          {timer.C}
-        </Timer>
+      <div>
+        <Container>
+          {timerElems}
+        </Container>
+      </div>
+        { curTimer && (
+          <Timer>
+            <TimerTitle>{curTimer.title}</TimerTitle>
+            {curTimer.C}
+          </Timer>
+        )
       }
     </Timers>
   );
-
+}
 /*
   return (
     <Timers>
@@ -88,7 +92,7 @@ function App() {
       ))}
     </Timers>
   );
-  */
 }
+*/
 
 export default App;

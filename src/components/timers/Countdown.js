@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import { TimerContext } from "../../context/TimerProvider";
 // Import components
 import Panel from "../generic/Panel";
@@ -14,8 +14,27 @@ const Countdown = () => {
     setCurSec,
     setIsCountASC,
     isEnded,
+    resetAll,
   } = useContext(TimerContext);
-  const timerTitle = "Stopwatch";
+  // ---- Crazy reset code ------------
+  const resetCallback = useRef(() => {
+    resetAll();
+  });
+  // On unload reset all this.state
+  useEffect(() => {
+    return () => {
+      resetCallback.current();
+    };
+  },[resetCallback]);
+
+  resetCallback.current = () => {
+    resetAll();
+  }
+  // ----------------------------------
+
+  console.log('KAREN Countdown curSec', curSec);
+
+  const timerTitle = "Countdown";
   const inputs = [
      <Input
       onChange={(event) => {
@@ -55,14 +74,8 @@ const Countdown = () => {
     <div>
       <Panel
           timerTitle={timerTitle}
-          // The time will be provied
-          // seconds={seconds}
-          // curSecond={curSecond}
           inputs={inputs}
           displayTimes={displayTimes}
-          // onStart={onStartHandler}
-          // onStop={onStopHandler}
-          // onPause={onPauseHandler}
       />
     {confetti}
     </div>

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 
 // Import components
 import Panel from "../generic/Panel";
@@ -15,7 +15,23 @@ const Stopwatch = () => {
     setWorkSecs,
     setIsCountASC,
     isEnded,
+    resetAll,
   } = useContext(TimerContext);
+  // ---- Crazy reset code ------------
+  const resetCallback = useRef(() => {
+    resetAll();
+  });
+  // On unload reset all this.state
+  useEffect(() => {
+    return () => {
+      resetCallback.current();
+    };
+  },[resetCallback]);
+
+  resetCallback.current = () => {
+    resetAll();
+  }
+  // ----------------------------------
 
   // Create input components
   const inputs = [
@@ -48,6 +64,15 @@ const Stopwatch = () => {
       key="display-current-seconds"
     />
   ];
+
+  console.log('KAREN StopWatch curSec', curSec);
+  // On unload reset all this.state
+  useEffect(() => {
+    console.log('KAREN StopWatch loaded');
+    return () => {
+      console.log('KAREN StopWatch unloaded');
+    };
+  },[]);
 
   // Set static timer direction state on load
   useEffect(() => {

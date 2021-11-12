@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import { TimerContext } from "../../context/TimerProvider";
 
 // Import components
@@ -14,14 +14,38 @@ const XY = () => {
     curSec,
     workSecs,
     setWorkSecs,
-    status,
     rounds,
     setRounds,
     curRound,
     setIsCountASC,
     isEnded,
+    resetAll,
   } = useContext(TimerContext);
+  // ---- Crazy reset code ------------
+  const resetCallback = useRef(() => {
+    resetAll();
+  });
+  // On unload reset all this.state
+  useEffect(() => {
+    return () => {
+      resetCallback.current();
+    };
+  },[resetCallback]);
 
+  resetCallback.current = () => {
+    resetAll();
+  }
+  // ----------------------------------
+
+  console.log('KAREN XY curRound', curRound, 'rounds', rounds);
+
+  // On unload reset all this.state
+  useEffect(() => {
+    console.log('KAREN XY loaded');
+    return () => {
+      console.log('KAREN XY unloaded');
+    };
+  },[]);
   const inputs = [
      <Input
       onChange={(event) => {
@@ -67,22 +91,6 @@ const XY = () => {
       key='display-rounds'
     />
   ];
-
-  // Remove the state context
-  useEffect(() => {
-    console.log('OnMount: work', curSec, 'round', curRound, 'curSec', curSec);
-    return () => {
-      console.log('OnMount: work', curSec, 'round', curRound);
-    }
-  })
-
-  // Address status change
-  useEffect(() => {
-    console.log('OnMount: work', curSec, 'round', curRound);
-    return () => {
-      console.log('OnMount: work', curSec, 'round', curRound);
-    }
-  }, [curSec, curRound, status]);
 
   // Set static timer direction state on load
   useEffect(() => {

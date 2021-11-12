@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 
 import { TimerContext } from "../../context/TimerProvider";
 
@@ -23,9 +23,33 @@ const Tabata = () => {
     setIsCountASC,
     isResting,
     isEnded,
+    resetAll,
   } = useContext(TimerContext);
+  // ---- Crazy reset code ------------
+  const resetCallback = useRef(() => {
+    resetAll();
+  });
+  // On unload reset all this.state
+  useEffect(() => {
+    return () => {
+      resetCallback.current();
+    };
+  },[resetCallback]);
 
+  resetCallback.current = () => {
+    resetAll();
+  }
+  // ----------------------------------
   console.log('KAREN tabata curRound', curRound, 'rounds', rounds);
+
+  // On unload reset all this.state
+  useEffect(() => {
+    console.log('KAREN tabata loaded');
+    return () => {
+      console.log('KAREN tabata unloaded');
+    };
+  },[]);
+
 
   // The amount of total secs in current Tabata segment
   const seconds = isResting() ? restSecs : workSecs;
@@ -89,6 +113,8 @@ const Tabata = () => {
     // Set static timer direction state on load
     useEffect(() => {
       setIsCountASC(false);
+      return () => {
+      };
     }, [setIsCountASC]);
 
     let confetti;
