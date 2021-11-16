@@ -21,11 +21,21 @@
    display: flex;
    flex-direction: column;
    justify-content: center;
-   width: 400px;
+   width: 500px;
    /* Using Gill Sans because it's fun, easy to read, and emits energy */
    font-family: "Gill Sans", sans-serif;
    background-color: ${primaryColor};
    color: ${GENERIC.PANEL.DEFAULT.color};
+`;
+
+const TitleContainer = styled.div`
+  color: ${GENERIC.PANEL.INPUT.background};
+  background-color: ${GENERIC.PANEL.DISPLAY.background};
+  background-color: ${GENERIC.BUTTON_COLORS.inactive.background};
+  padding: 20px 20px 30px;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
 `;
 
  const InputsContainer = styled.div`
@@ -53,7 +63,12 @@
   /**
    * the Panel function
    */
- const Panel = ({inputs, displayTimes, displayRounds}) => {
+ const Panel = ({
+   timerTitle,
+   inputs,
+   displayTimes,
+   displayRounds
+ }) => {
     console.log('KAREN  panel - rerendering')
     return (
      <PanelStyle>
@@ -67,11 +82,15 @@
       <ControlsContainer>
         <ButtonPanel/>
       </ControlsContainer>
+      <TitleContainer>
+        {timerTitle}
+      </TitleContainer>
      </PanelStyle>
    );
  };
 
  Panel.propTypes = {
+   timerTitle: PropTypes.string.isRequired,
    // An array of display round objects
    displayRound: PropTypes.arrayOf(DisplayRounds),
    // An array of display time objects
@@ -86,10 +105,10 @@
      component: <Panel onClick={()=>{}} />,
      props: [
        {
-         prop: 'inputs',
-         key: 'inputs',
-         description: "An Array of Input objects",
-         type: "[Input]",
+         prop: 'timerTitle',
+         key: 'timerTitle',
+         description: "The name of the timer",
+         type: "String",
          defaultValue: "none",
        },
        {

@@ -18,8 +18,9 @@ const Timers = styled.div`
 
 const Timer = styled.div`
   border: 1px solid gray;
-  padding: 20px;
-  margin: 10px;
+  margin: 20px 0 20px;
+  border-radius: 20%;
+  overflow: hidden;
 `;
 
 const Container = styled.div`
@@ -27,8 +28,6 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-around;
 `;
-
-const TimerTitle = styled.div``;
 
 function App() {
   //const curTimer = useRef(undefined);
@@ -71,7 +70,6 @@ function App() {
       </div>
         { curTimer && (
           <Timer>
-            <TimerTitle>{curTimer.title}</TimerTitle>
             {curTimer.C}
           </Timer>
         )
@@ -79,20 +77,5 @@ function App() {
     </Timers>
   );
 }
-/*
-  return (
-    <Timers>
-      {timers.map((timer) => (
-        <Timer
-          key={timer.title}
-        >
-          <TimerTitle>{timer.title}</TimerTitle>
-          {timer.C}
-        </Timer>
-      ))}
-    </Timers>
-  );
-}
-*/
 
 export default App;

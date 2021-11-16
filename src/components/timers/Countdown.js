@@ -32,8 +32,6 @@ const Countdown = () => {
   }
   // ----------------------------------
 
-  console.log('KAREN Countdown curSec', curSec);
-
   const timerTitle = "Countdown";
   const inputs = [
      <Input
