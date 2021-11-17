@@ -3,13 +3,9 @@
  * It also controls the color palette
  */
  import React, {useContext} from "react";
- import PropTypes from "prop-types";
  import styled from "styled-components";
 
- // Import components
- import DisplayTime from "./DisplayTime";
- import DisplayRounds from "./DisplayRounds";
- import Input from "./Input";
+ // Import component
  import ButtonPanel from "./ButtonPanel";
 
  // Import the data provider
@@ -96,16 +92,6 @@ const TitleContainer = styled.div`
       </TitleContainer>
      </PanelStyle>
    );
- };
-
- Panel.propTypes = {
-   timerTitle: PropTypes.string,
-   // An array of display round objects
-   displayRound: PropTypes.instanceOf(DisplayRounds),
-   // An array of display time objects
-   displayTimes: PropTypes.arrayOf(DisplayTime),
-   // An Array of input objects
-   inputs: PropTypes.arrayOf(Input),
  };
 
  // Class description for the docs

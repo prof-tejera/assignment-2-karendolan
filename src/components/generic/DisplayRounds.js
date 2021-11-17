@@ -77,9 +77,9 @@ const DisplayRounds = () => {
 
 // Class description for the docs
 DisplayRounds.docs =   {
-    title: 'Display rounds ',
-    component: <DisplayRounds />,
-    props: []
+  title: 'Display rounds ',
+  component: <DisplayRounds />,
+  props: [],
 };
 
 export default DisplayRounds;
