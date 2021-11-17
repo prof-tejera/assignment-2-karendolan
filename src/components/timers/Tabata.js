@@ -40,7 +40,7 @@ const Tabata = () => {
     resetAll();
   }
   // ----------------------------------
-  console.log('KAREN tabata curRound', curRound, 'rounds', rounds);
+  console.log('KAREN tabata curRound', curRound, 'curSec', curSec, 'rounds', rounds);
 
   // On unload reset all this.state
   useEffect(() => {
@@ -112,7 +112,7 @@ const Tabata = () => {
 
     // Set static timer direction state on load
     useEffect(() => {
-      setIsCountASC(false);
+      setIsCountASC(true);
       return () => {
       };
     }, [setIsCountASC]);

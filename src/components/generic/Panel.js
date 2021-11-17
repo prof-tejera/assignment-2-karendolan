@@ -56,7 +56,7 @@ const TitleContainer = styled.div`
     padding: 20px 60px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     flex-grow: 1;
   `;
 
@@ -76,17 +76,14 @@ const TitleContainer = styled.div`
  }) => {
    // Two context items for hidding the settings
    const {
-     isPaused,
-     isRunning,
+     isReset,
    } = useContext(TimerContext);
-
-   const showInputs = !isPaused() && !isRunning();
 
     console.log('KAREN  panel - rerendering')
     return (
      <PanelStyle>
       <InputsContainer>
-        {(showInputs && inputs)}
+        {(isReset() && inputs)}
       </InputsContainer>
       <DisplayContainer>
         {displayTimes}
@@ -103,7 +100,7 @@ const TitleContainer = styled.div`
  };
 
  Panel.propTypes = {
-   timerTitle: PropTypes.string.isRequired,
+   timerTitle: PropTypes.string,
    // An array of display round objects
    displayRound: PropTypes.arrayOf(DisplayRounds),
    // An array of display time objects

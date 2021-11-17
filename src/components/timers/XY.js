@@ -21,7 +21,7 @@ const XY = () => {
     isEnded,
     resetAll,
   } = useContext(TimerContext);
-  // ---- Crazy reset code ------------
+  // ---- Reset callback code ------------
   const resetCallback = useRef(() => {
     resetAll();
   });
@@ -37,15 +37,8 @@ const XY = () => {
   }
   // ----------------------------------
 
-  console.log('KAREN XY curRound', curRound, 'rounds', rounds);
+  console.log('KAREN XY curRound', curRound, 'curSec', curSec, 'rounds', rounds);
 
-  // On unload reset all this.state
-  useEffect(() => {
-    console.log('KAREN XY loaded');
-    return () => {
-      console.log('KAREN XY unloaded');
-    };
-  },[]);
   const inputs = [
      <Input
       onChange={(event) => {
@@ -94,7 +87,7 @@ const XY = () => {
 
   // Set static timer direction state on load
   useEffect(() => {
-    setIsCountASC(false);
+    setIsCountASC(true);
   }, [setIsCountASC]);
 
   let confetti;

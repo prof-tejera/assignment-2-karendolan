@@ -39,7 +39,7 @@ const TimerProvider = ({children}) => {
   // ------- Start crazy counter --------- //
 
   /**
-   * Crazy counter
+   * Counter callback
    */
   const callback = () => {
     const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;

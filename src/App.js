@@ -21,6 +21,9 @@ const StyledLink = styled(Link)`
   font-weight: bold;
   margin: 1rem;
   display: inline-block;
+  &:hover {
+    color: ${GENERIC.PANEL.DEFAULT.background};
+  }
 `;
 
 const StyledNav = styled.div`
@@ -28,6 +31,7 @@ const StyledNav = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
+  justify-content: space-around;
 `;
 
 const Container = styled.div`

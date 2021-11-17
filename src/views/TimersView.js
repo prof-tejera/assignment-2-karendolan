@@ -8,7 +8,12 @@ import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
 import Tabata from "../components/timers/Tabata";
 
+// Use button for timer choices
 import Button from "../components/generic/Button";
+
+// Common color for default timer background
+import GENERIC  from "../shared/COLOR";
+const primaryColor =  GENERIC.PANEL.DEFAULT.background;
 
 const Timers = styled.div`
   display: flex;
@@ -19,7 +24,7 @@ const Timers = styled.div`
 const TimerContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: start;
 `;
 
 const Timer = styled.div`
@@ -28,13 +33,16 @@ const Timer = styled.div`
   border-radius: 20%;
   overflow: hidden;
   height: 80%;
+  min-width: 500px;
+  min-height: 700px;
+  background-color: ${primaryColor};
 `;
 
 const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 30px;
-  margin-top: 80px;
+  margin-top: 120px;
 `;
 
 function App() {
@@ -70,16 +78,16 @@ function App() {
     <Timers>
       <TimerContainer>
         <MenuContainer>
-          <div>
-            <h1>Timers</h1>
-          </div>
           {timerElems}
         </MenuContainer>
-        { !!curTimer && (
+        { !!curTimer ? (
           <Timer>
             {curTimer.C}
           </Timer>
-        )}
+        ) : (
+          <Timer/>
+        )
+      }
       </TimerContainer>
     </Timers>
   );
