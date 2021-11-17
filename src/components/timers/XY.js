@@ -36,9 +36,6 @@ const XY = () => {
     resetAll();
   }
   // ----------------------------------
-
-  console.log('KAREN XY curRound', curRound, 'curSec', curSec, 'rounds', rounds);
-
   const inputs = [
      <Input
       onChange={(event) => {

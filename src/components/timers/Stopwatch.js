@@ -17,6 +17,7 @@ const Stopwatch = () => {
     isEnded,
     resetAll,
   } = useContext(TimerContext);
+  
   // ---- Crazy reset code ------------
   const resetCallback = useRef(() => {
     resetAll();
@@ -64,15 +65,6 @@ const Stopwatch = () => {
       key="display-current-seconds"
     />
   ];
-
-  console.log('KAREN StopWatch curSec', curSec);
-  // On unload reset all this.state
-  useEffect(() => {
-    console.log('KAREN StopWatch loaded');
-    return () => {
-      console.log('KAREN StopWatch unloaded');
-    };
-  },[]);
 
   // Set static timer direction state on load
   useEffect(() => {

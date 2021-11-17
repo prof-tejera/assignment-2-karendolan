@@ -25,7 +25,7 @@ const Tabata = () => {
     isEnded,
     resetAll,
   } = useContext(TimerContext);
-  // ---- Crazy reset code ------------
+  // ---- reset callback  ------------
   const resetCallback = useRef(() => {
     resetAll();
   });
@@ -40,16 +40,6 @@ const Tabata = () => {
     resetAll();
   }
   // ----------------------------------
-  console.log('KAREN tabata curRound', curRound, 'curSec', curSec, 'rounds', rounds);
-
-  // On unload reset all this.state
-  useEffect(() => {
-    console.log('KAREN tabata loaded');
-    return () => {
-      console.log('KAREN tabata unloaded');
-    };
-  },[]);
-
 
   // The amount of total secs in current Tabata segment
   const seconds = isResting() ? restSecs : workSecs;

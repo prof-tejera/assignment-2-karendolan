@@ -31,15 +31,12 @@ const Countdown = () => {
     resetAll();
   }
   // ----------------------------------
-  console.log('KAREN Countdown workSecs', workSecs);
   const timerTitle = "Countdown";
   const inputs = [
      <Input
       onChange={(event) => {
         const num = parseInt(event.target.value);
-        const setVal = (num > 0 ? num : 0);
         // The number of seconds to count down
-        console.log('KAREN Countdown onChange orig', num, 'setVal', setVal);
         setWorkSecs((num > 0 ? num : 0));
         // Setting Cur sec to start at the total for countdown
         setCurSec((num > 0 ? num : 0));

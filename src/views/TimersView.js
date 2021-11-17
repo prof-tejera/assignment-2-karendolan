@@ -58,7 +58,6 @@ function App() {
 
   // previous timer end, current timer load? via effect?
   const chooseTimer = (timer) => {
-    console.log('KAREN Choosing timer', timer.title);
     setCurTimer(timer);
   };
 

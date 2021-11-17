@@ -79,7 +79,6 @@ const TitleContainer = styled.div`
      isReset,
    } = useContext(TimerContext);
 
-    console.log('KAREN  panel - rerendering')
     return (
      <PanelStyle>
       <InputsContainer>

@@ -53,8 +53,9 @@ const TimerProvider = ({children}) => {
           setStatus(STATUS.RESTING);
           setCurSec(c => isCountASC ? 0 : restSecs);
         } else {
-          // increment the round
+          // increment the round, and start working again
           setCurRound(r => r + 1);
+          setCurSec(c => isCountASC ? 0 : workSecs);
         }
       } else {
         // Switch from resting to working
