@@ -56,6 +56,10 @@ const GENERIC = {
       color: COLOR.secondary13.color,
       background: COLOR.primary1.color,
     },
+    resting: {
+      color: COLOR.primaryLightest.color,
+      background: COLOR.primary3.color,
+    },
     label: {
       color: COLOR.primaryLightest.color,
     }

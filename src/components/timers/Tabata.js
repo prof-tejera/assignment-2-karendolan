@@ -42,8 +42,9 @@ const Tabata = () => {
   // ----------------------------------
 
   // The amount of total secs in current Tabata segment
-  const seconds = isResting() ? restSecs : workSecs;
-  const label = isResting() ? 'Resting' : 'Working';
+  // Ends on REST sequence
+  const seconds = isResting() || isEnded ? restSecs : workSecs;
+  const label = isResting() || isEnded ? 'Resting' : 'Working';
   const inputs = [
     <Input
       onChange={(event) => {
@@ -96,6 +97,7 @@ const Tabata = () => {
     <DisplayRounds
         numRounds={rounds}
         curRound={curRound}
+        isResting={isResting}
         key='display-round'
       />
     ];

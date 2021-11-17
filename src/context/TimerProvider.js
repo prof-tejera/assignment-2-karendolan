@@ -45,24 +45,29 @@ const TimerProvider = ({children}) => {
     const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;
     if (curSec === endSec) {
       if (isWorking()) {
-        if (curRound === rounds) {
-          // Ends on a work round
+        // End if no last rest
+        if (curRound === rounds && !(restSecs > 0)) {
           end();
         } else if (restSecs > 0) {
-          // set resting period
+          // start resting
           setStatus(STATUS.RESTING);
           setCurSec(c => isCountASC ? 0 : restSecs);
         } else {
-          // increment the round, and start working again
+          // Increment the round, and start working again
           setCurRound(r => r + 1);
           setCurSec(c => isCountASC ? 0 : workSecs);
         }
       } else {
-        // Switch from resting to working
-        setStatus(STATUS.WORKING);
-        setCurSec(c => isCountASC ? 0 : workSecs);
-        // rounds end on a work round
-        setCurRound(r => r + 1);
+        if (curRound === rounds) {
+          // End after the last rest
+          end();
+        } else {
+          // Switch from resting to working
+          setStatus(STATUS.WORKING);
+          setCurSec(c => isCountASC ? 0 : workSecs);
+          // rounds end on a work round
+          setCurRound(r => r + 1);
+        }
       }
     } else {
       setCurSec(c => isCountASC ? c + 1 : c - 1);

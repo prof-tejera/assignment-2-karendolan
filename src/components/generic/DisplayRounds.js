@@ -42,14 +42,14 @@ const RoundGroup = styled.div`
   }
 `;
 
-const DisplayRounds = ({ numRounds, curRound }) => {
+const DisplayRounds = ({ numRounds, curRound, isResting }) => {
   // construct the round row
   const dots = Array.from(Array(numRounds), (e,i)=>i+1).map(i => {
     const isCurRound = (i === curRound);
     return (
       <Round
         size={isCurRound ? sizeMapping.large : sizeMapping.medium}
-        activeKey={isCurRound ? 'active' : 'inactive'}
+        activeKey={isCurRound ? (isResting && isResting() ? 'resting' :'active') : 'inactive'}
         key={i}
       >
         {isCurRound && curRound}
@@ -71,6 +71,8 @@ DisplayRounds.propTypes = {
   numRounds: PropTypes.number,
   // The round that is active
   curRound: PropTypes.number,
+  // Function for checking if status is resting
+  isResting: PropTypes.func,
 };
 
 DisplayRounds.defaultProps = {
@@ -96,6 +98,13 @@ DisplayRounds.docs =   {
         description: "The number of the current round",
         type: 'number',
         defaultValue: DisplayRounds.defaultProps.curRound,
+      },
+      {
+        prop: 'isResting',
+        key: 'isRestingisResting',
+        description: "Function to test if status is Resting",
+        type: 'function',
+        defaultValue: 'none',
       },
     ]
 };
