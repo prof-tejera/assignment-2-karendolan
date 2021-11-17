@@ -52,7 +52,7 @@ const Stopwatch = () => {
   // Stop watch shows 2 display times, the count up and end time
   const displayTimes = [
     <DisplayTime
-      label=""
+      label="Total"
       seconds={workSecs}
       active={false}
       key="display-total-seconds"

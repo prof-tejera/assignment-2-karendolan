@@ -38,6 +38,9 @@ const LabelStyled = styled.label`
 // context (rounds, work secs, rest secs, etc). The context of the iput is
 // controlled at the timer level.
 const Input = ({value, onChange, name, label, maxNum}) => {
+
+  // If value is 0, null it out so the prompt 0 is shown
+  // const normalizedValue = value === 0 ? undefined : value;
   return (
     <InputContainer>
       <LabelStyled

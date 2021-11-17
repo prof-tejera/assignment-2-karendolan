@@ -115,7 +115,7 @@ const TitleContainer = styled.div`
  // Class description for the docs
  Panel.docs =   {
      title: 'Panel ',
-     component: <Panel onClick={()=>{}} />,
+     component: <Panel onClick={()=>{}} timerTitle="Panel" />,
      props: [
        {
          prop: 'timerTitle',

@@ -60,7 +60,7 @@ Button.propTypes = {
   // Indicates if this is a primary or secondary button
   active: PropTypes.bool,
   // The relative size of the button to display
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']),
   // The text to display in the button
   text: PropTypes.string,
   // The call back to use when the button is clicked

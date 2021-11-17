@@ -117,8 +117,6 @@ const TimerProvider = ({children}) => {
 
   const rest = () => {
     setStatus(STATUS.RESTING);
-    // todo: don't set time here, it'll be done  outside at top of work interval
-    // setCurSec(isCountASC ? 0: restSecs);
     // Calling start ends prevous interval, if not already ended
     _startInterval();
   }
@@ -157,9 +155,6 @@ const TimerProvider = ({children}) => {
     setCurRound(0);
     setStatus(STATUS.RESET);
   }
-
-  // Abstract them?
-  //const getCurSec = () => curSec;
 
   return (
     // Expose global values of the timer children
