@@ -45,20 +45,20 @@ const DocumentComponent = ({propDocs, component, title}) => {
               <th>Default value</th>
             </tr>
           </thead>
-          {propDocs.map((doc) => {
-            return (
-              <tbody>
-                <tr>
-                  <td>{doc.prop}</td>
-                  <td>{doc.description}</td>
-                  <td>{doc.type}</td>
-                  <td>
-                    <code>{doc.defaultValue}</code>
-                  </td>
-                </tr>
-              </tbody>
-            );
-          })}
+          <tbody>
+            {propDocs.map((doc) => {
+              return (
+                  <tr key={doc.prop}>
+                    <td>{doc.prop}</td>
+                    <td>{doc.description}</td>
+                    <td>{doc.type}</td>
+                    <td>
+                      <code>{doc.defaultValue}</code>
+                    </td>
+                  </tr>
+              );
+            })}
+          </tbody>
         </Documentation>
       </Container>
     </Wrapper>

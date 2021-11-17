@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext, useEffect } from "react";
 
 import { TimerContext } from "../../context/TimerProvider";
 
@@ -8,6 +8,9 @@ import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 import DisplayRounds from "../generic/DisplayRounds";
 import ConfettiOverlay from "../generic/ConfettiOverlay";
+
+// Hook to reset all state when component unloads
+import useResetCallback from "../../utils/useResetCallback";
 
 const Tabata = () => {
   const timerTitle = "Tabata";
@@ -19,27 +22,12 @@ const Tabata = () => {
     setRestSecs,
     rounds,
     setRounds,
-    curRound,
     setIsCountASC,
     isResting,
     isEnded,
-    resetAll,
   } = useContext(TimerContext);
-  // ---- reset callback  ------------
-  const resetCallback = useRef(() => {
-    resetAll();
-  });
-  // On unload reset all this.state
-  useEffect(() => {
-    return () => {
-      resetCallback.current();
-    };
-  },[resetCallback]);
-
-  resetCallback.current = () => {
-    resetAll();
-  }
-  // ----------------------------------
+  // Hook to reset all state when component unloads;
+  useResetCallback();
 
   // The amount of total secs in current Tabata segment
   // Ends on REST sequence
@@ -93,14 +81,6 @@ const Tabata = () => {
       key="display-countdown-time"
     />
   ];
-  const displayRounds = [
-    <DisplayRounds
-        numRounds={rounds}
-        curRound={curRound}
-        isResting={isResting}
-        key='display-round'
-      />
-    ];
 
     // Set static timer direction state on load
     useEffect(() => {
@@ -121,7 +101,7 @@ const Tabata = () => {
             timerTitle={timerTitle}
             inputs={inputs}
             displayTimes={displayTimes}
-            displayRounds={displayRounds}
+            displayRounds={(<DisplayRounds/>)}
         />
       {confetti}
       </div>

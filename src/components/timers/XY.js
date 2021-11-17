@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext, useEffect } from "react";
 import { TimerContext } from "../../context/TimerProvider";
 
 // Import components
@@ -8,6 +8,9 @@ import DisplayRounds from "../generic/DisplayRounds";
 import DisplayTime from "../generic/DisplayTime";
 import ConfettiOverlay from "../generic/ConfettiOverlay";
 
+// Hook to reset all state when component unloads
+import useResetCallback from "../../utils/useResetCallback";
+
 const XY = () => {
   const timerTitle = "XY";
   const {
@@ -16,26 +19,12 @@ const XY = () => {
     setWorkSecs,
     rounds,
     setRounds,
-    curRound,
     setIsCountASC,
     isEnded,
-    resetAll,
   } = useContext(TimerContext);
-  // ---- Reset callback code ------------
-  const resetCallback = useRef(() => {
-    resetAll();
-  });
-  // On unload reset all this.state
-  useEffect(() => {
-    return () => {
-      resetCallback.current();
-    };
-  },[resetCallback]);
+  // Hook to reset all state when component unloads;
+  useResetCallback();
 
-  resetCallback.current = () => {
-    resetAll();
-  }
-  // ----------------------------------
   const inputs = [
      <Input
       onChange={(event) => {
@@ -74,13 +63,6 @@ const XY = () => {
       key="display-countdown-time"
     />
   ]
-  const displayRounds = [
-    <DisplayRounds
-      numRounds={rounds}
-      curRound={curRound}
-      key='display-rounds'
-    />
-  ];
 
   // Set static timer direction state on load
   useEffect(() => {
@@ -96,7 +78,7 @@ const XY = () => {
     <div>
       <Panel
           timerTitle={timerTitle}
-          displayRounds={displayRounds}
+          displayRounds={(<DisplayRounds/>)}
           inputs={inputs}
           displayTimes={displayTimes}
       />

@@ -1,10 +1,12 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, { useContext, useEffect } from "react";
 import { TimerContext } from "../../context/TimerProvider";
 // Import components
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import ConfettiOverlay from "../generic/ConfettiOverlay";
 import DisplayTime from "../generic/DisplayTime";
+// Hook to reset all state when component unloads
+import useResetCallback from "../../utils/useResetCallback";
 
 const Countdown = () => {
   const {
@@ -14,23 +16,11 @@ const Countdown = () => {
     setCurSec,
     setIsCountASC,
     isEnded,
-    resetAll,
   } = useContext(TimerContext);
-  // ---- Crazy reset code ------------
-  const resetCallback = useRef(() => {
-    resetAll();
-  });
-  // On unload reset all this.state
-  useEffect(() => {
-    return () => {
-      resetCallback.current();
-    };
-  },[resetCallback]);
 
-  resetCallback.current = () => {
-    resetAll();
-  }
-  // ----------------------------------
+  // Hook to reset all state when component unloads;
+  useResetCallback();
+
   const timerTitle = "Countdown";
   const inputs = [
      <Input

@@ -24,10 +24,6 @@ const Container = styled.div`
   width: 80%;
 `;
 
-const Title = styled.div`
-  font-size: 1rem;
-`;
-
 const Documentation = () => {
   // compomose the component elements
   const components = DocList.map(CurrComp => {
@@ -43,7 +39,6 @@ const Documentation = () => {
   })
   return (
     <Container>
-      <Title>Documentation</Title>
       <TimerProvider>
         {components}
       </TimerProvider>

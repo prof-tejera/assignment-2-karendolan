@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext, useEffect } from "react";
 
 // Import components
 import Panel from "../generic/Panel";
@@ -6,6 +6,9 @@ import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 import ConfettiOverlay from "../generic/ConfettiOverlay";
 import { TimerContext } from "../../context/TimerProvider";
+
+// Hook to reset all state when component unloads
+import useResetCallback from "../../utils/useResetCallback";
 
 const Stopwatch = () => {
   const timerTitle = "Stopwatch";
@@ -15,24 +18,10 @@ const Stopwatch = () => {
     setWorkSecs,
     setIsCountASC,
     isEnded,
-    resetAll,
   } = useContext(TimerContext);
-  
-  // ---- Crazy reset code ------------
-  const resetCallback = useRef(() => {
-    resetAll();
-  });
-  // On unload reset all this.state
-  useEffect(() => {
-    return () => {
-      resetCallback.current();
-    };
-  },[resetCallback]);
 
-  resetCallback.current = () => {
-    resetAll();
-  }
-  // ----------------------------------
+  // Hook to reset all state when component unloads;
+  useResetCallback();
 
   // Create input components
   const inputs = [

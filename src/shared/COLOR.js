@@ -57,7 +57,7 @@ const GENERIC = {
       background: COLOR.primary1.color,
     },
     resting: {
-      color: COLOR.primaryLightest.color,
+      color: COLOR.primary1.color,
       background: COLOR.primary3.color,
     },
     label: {

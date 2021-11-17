@@ -72,7 +72,7 @@ const TitleContainer = styled.div`
    timerTitle,
    inputs,
    displayTimes,
-   displayRounds,
+   displayRound,
  }) => {
    // Two context items for hidding the settings
    const {
@@ -86,7 +86,7 @@ const TitleContainer = styled.div`
       </InputsContainer>
       <DisplayContainer>
         {displayTimes}
-        {displayRounds}
+        {displayRound}
       </DisplayContainer>
       <ControlsContainer>
         <ButtonPanel/>
@@ -101,7 +101,7 @@ const TitleContainer = styled.div`
  Panel.propTypes = {
    timerTitle: PropTypes.string,
    // An array of display round objects
-   displayRound: PropTypes.arrayOf(DisplayRounds),
+   displayRound: PropTypes.instanceOf(DisplayRounds),
    // An array of display time objects
    displayTime: PropTypes.arrayOf(DisplayTime),
    // An Array of input objects
@@ -123,8 +123,8 @@ const TitleContainer = styled.div`
        {
          prop: 'displayRound',
          key: 'displayRound',
-         description: "An Array of DisplayRound objects",
-         type: "[DisplayRound]",
+         description: "A DisplayRound object",
+         type: "DisplayRound",
          defaultValue: "none",
        },
        {

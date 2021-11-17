@@ -1,7 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import GENERIC  from "../../shared/COLOR";
+
+import { TimerContext } from "../../context/TimerProvider";
 
 const sizeMapping = {
   small: 20,
@@ -42,14 +43,22 @@ const RoundGroup = styled.div`
   }
 `;
 
-const DisplayRounds = ({ numRounds, curRound, isResting }) => {
+const DisplayRounds = () => {
+  const {
+    numRounds,
+    curRound,
+    isResting,
+    isEnded,
+  } = useContext(TimerContext);
+
+  const showRestState = isResting() || isEnded();
   // construct the round row
   const dots = Array.from(Array(numRounds), (e,i)=>i+1).map(i => {
     const isCurRound = (i === curRound);
     return (
       <Round
         size={isCurRound ? sizeMapping.large : sizeMapping.medium}
-        activeKey={isCurRound ? (isResting && isResting() ? 'resting' :'active') : 'inactive'}
+        activeKey={isCurRound ? (showRestState ? 'resting' :'active') : 'inactive'}
         key={i}
       >
         {isCurRound && curRound}
@@ -66,47 +75,11 @@ const DisplayRounds = ({ numRounds, curRound, isResting }) => {
   );
 };
 
-DisplayRounds.propTypes = {
-  // The number of rounds to display
-  numRounds: PropTypes.number,
-  // The round that is active
-  curRound: PropTypes.number,
-  // Function for checking if status is resting
-  isResting: PropTypes.func,
-};
-
-DisplayRounds.defaultProps = {
-  curRound: 0,
-  numRounds: 0,
-};
-
 // Class description for the docs
 DisplayRounds.docs =   {
     title: 'Display rounds ',
     component: <DisplayRounds />,
-    props: [
-      {
-        prop: 'numRounds',
-        key: 'numRounds',
-        description: 'The total number of rounds',
-        type: 'number',
-        defaultValue: DisplayRounds.defaultProps.numRounds,
-      },
-      {
-        prop: 'curRound',
-        key: 'curRound',
-        description: "The number of the current round",
-        type: 'number',
-        defaultValue: DisplayRounds.defaultProps.curRound,
-      },
-      {
-        prop: 'isResting',
-        key: 'isRestingisResting',
-        description: "Function to test if status is Resting",
-        type: 'function',
-        defaultValue: 'none',
-      },
-    ]
+    props: []
 };
 
 export default DisplayRounds;

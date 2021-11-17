@@ -66,7 +66,7 @@ function App() {
       <Button
         key={timer.title}
         size='xlarge'
-        active={true}
+        active={curTimer.title === timer.title}
         text={timer.title}
         onClick={() => chooseTimer(timer)}
       />
