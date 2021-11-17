@@ -31,8 +31,9 @@ const Tabata = () => {
 
   // The amount of total secs in current Tabata segment
   // Ends on REST sequence
-  const seconds = isResting() || isEnded ? restSecs : workSecs;
-  const label = isResting() || isEnded ? 'Resting' : 'Working';
+  const seconds = isResting() || isEnded() ? restSecs : workSecs;
+  const label = isResting() || isEnded() ? 'Rest' : 'Work';
+
   const inputs = [
     <Input
       onChange={(event) => {

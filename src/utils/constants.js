@@ -16,8 +16,3 @@ export const RUNNING_STATUS = [
   STATUS.WORKING,
   STATUS.RESTING,
 ];
-
-export const STOPPED_STATUS = [
-  STATUS.RESET,
-  STATUS.PAUSED,
-];

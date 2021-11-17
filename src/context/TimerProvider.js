@@ -115,9 +115,13 @@ const TimerProvider = ({children}) => {
   }
 
   const work = () => {
-    setCurSec(isPaused ? curSec : (isCountASC ? workSecs : 0));
-    setStatus(wasResting ? STATUS.RESETING : STATUS.WORKING);
+    // If was paused, set work status to either the work of resting or working
+    setStatus(wasResting ? STATUS.RESTING : STATUS.WORKING);
+    // If first start, initialize current round
     setCurRound(curSec === 0 && rounds > 0 && curRound === 0 ? 1 : curRound);
+    // If first start, initialize start seconds
+    setCurSec(isPaused ? curSec : (isCountASC ? workSecs : 0));
+    // Start the counter!
     _startInterval();
   }
 
@@ -145,21 +149,21 @@ const TimerProvider = ({children}) => {
 
   const resetStart = () => {
     _stopInterval();
+    setStatus(STATUS.RESET);
     setWasResting(false);
     setCurSec(isCountASC ? 0 : workSecs);
     setCurRound(rounds > 0 ? 1 : 0);
-    setStatus(STATUS.RESET);
   }
 
   const resetAll = () => {
     _stopInterval();
+    setStatus(STATUS.RESET);
     setWasResting(false);
     setCurSec(0);
     setWorkSecs(0);
     setRestSecs(0);
     setRounds(0);
     setCurRound(0);
-    setStatus(STATUS.RESET);
   }
 
   return (
