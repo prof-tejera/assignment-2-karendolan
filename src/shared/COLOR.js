@@ -24,6 +24,7 @@ const COLOR = {
   secondary24: { color: '#553C00' },
 };
 
+// Define different component generic color sets
 const GENERIC = {
   COLOR,
   BUTTON_COLORS:{

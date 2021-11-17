@@ -102,7 +102,7 @@ const Tabata = () => {
             timerTitle={timerTitle}
             inputs={inputs}
             displayTimes={displayTimes}
-            displayRounds={(<DisplayRounds/>)}
+            displayRound={(<DisplayRounds/>)}
         />
       {confetti}
       </div>

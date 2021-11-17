@@ -1,5 +1,6 @@
-import React, {createContext, useRef, useState} from 'react';
+import React, {createContext, useState} from 'react';
 // Import helper
+import useIntervalHelper from '../utils/useIntervalHelper';
 import { STATUS, RUNNING_STATUS } from '../utils/constants';
 // Crete a Timer context with default empty
 export const TimerContext = createContext({});
@@ -7,8 +8,6 @@ export const TimerContext = createContext({});
  * Create a context for the Timers
  */
 const TimerProvider = ({children}) => {
-  const interval = useRef();
-  const savedCallback = useRef(null);
   // the current seconds state of the timer
   const [curSec, setCurSec] = useState(0);
   // the total work seconds for the timer
@@ -21,97 +20,40 @@ const TimerProvider = ({children}) => {
   const [curRound, setCurRound] = useState(0);
   // Keep track if wasResting before pause
   const [wasResting, setWasResting] = useState(0);
-  // The direction of the current counter, defaults descending
-  // "[...] a significant increase (p=.007) in motivation
-  // was measured when a descending timer was used.
-  // When applying the findings of the current study to a
-  // timed workplace or sports setting, the benefits of a
-  // descending timer in regards to motivation should be considered."
-  // Ruymaekers, Arno, Frederick, Dr. Christina M.
-  // “Ascending versus Descending Timers: Stress and Motivation.”
-  // Nevada State Undergraduate Research Journal. V4:I1 Spring-2018.
-  // (2018). http://dx.doi.org/10.15629/6.7.8.7.5_4-1_S-2018_3
-  // URL: http://nsurj.com/v4-i1-3/
+  // The direction of the current counter, defaults ascending
   const [isCountASC, setIsCountASC] = useState(false);
   // the current running/puse/rest/reset state of the timer
   const [status, setStatus] = useState(STATUS.RESET);
-
-  // ------- Start crazy counter --------- //
-
-  /**
-   * Counter callback
-   */
-  const callback = () => {
-    const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;
-    if (curSec === endSec) {
-      if (isWorking()) {
-        // End if no last rest
-        if (curRound === rounds && !(restSecs > 0)) {
-          end();
-        } else if (restSecs > 0) {
-          // start resting
-          setStatus(STATUS.RESTING);
-          setCurSec(c => isCountASC ? 0 : restSecs);
-        } else {
-          // Increment the round, and start working again
-          setCurRound(r => r + 1);
-          setCurSec(c => isCountASC ? 0 : workSecs);
-        }
-      } else {
-        if (curRound === rounds) {
-          // End after the last rest
-          end();
-        } else {
-          // Switch from resting to working
-          setStatus(STATUS.WORKING);
-          setCurSec(c => isCountASC ? 0 : workSecs);
-          // rounds end on a work round
-          setCurRound(r => r + 1);
-        }
-      }
-    } else {
-      setCurSec(c => isCountASC ? c + 1 : c - 1);
-    }
-  }
-  savedCallback.current = callback;
-
-  const _startInterval = () => {
-    // Safety check that existing interval is gone
-    _stopInterval();
-    interval.current = setInterval(() => {
-      return (savedCallback.current(), 100000);
-    }, 1000);
-  }
-  const _stopInterval = () => {
-    if (interval.current) {
-      clearInterval(interval.current);
-      interval.current = null;
-    }
-  }
-  // ------- End crazy counter --------- //
-
+  // Set up convinience functions
   const isRunning = () => {
     return RUNNING_STATUS.includes(status);
   }
-
   const isPaused = () => {
     return status === STATUS.PAUSED;
   }
-
   const isEnded = () => {
     return status === STATUS.ENDED;
   }
-
   const isReset = () => {
     return status === STATUS.RESET;
   }
-
   const isResting = () => {
     return status === STATUS.RESTING;
   }
-
   const isWorking = () => {
     return status === STATUS.WORKING;
+  }
+
+  // -----  State change callback functions ---  //
+
+  const end = () => {
+    stopInterval();
+    // This fires off the fireworks!!
+    setStatus(STATUS.ENDED);
+    setWasResting(false);
+    setCurRound(rounds);
+    // Ending on work secs vs rest
+    setCurSec(isCountASC ? workSecs : 0);
   }
 
   const work = () => {
@@ -122,33 +64,23 @@ const TimerProvider = ({children}) => {
     // If first start, initialize start seconds
     setCurSec(isPaused ? curSec : (isCountASC ? workSecs : 0));
     // Start the counter!
-    _startInterval();
+    startInterval();
   }
 
   const rest = () => {
     setStatus(STATUS.RESTING);
     // Calling start ends prevous interval, if not already ended
-    _startInterval();
+    startInterval();
   }
 
   const pause = () => {
     setWasResting(isWorking());
     setStatus(STATUS.PAUSED);
-    _stopInterval();
-  }
-
-  const end = () => {
-    _stopInterval();
-    // This fires off the fireworks!!
-    setStatus(STATUS.ENDED);
-    setWasResting(false);
-    setCurRound(rounds);
-    // Ending on work secs vs rest
-    setCurSec(isCountASC ? workSecs : 0);
+    stopInterval();
   }
 
   const resetStart = () => {
-    _stopInterval();
+    stopInterval();
     setStatus(STATUS.RESET);
     setWasResting(false);
     setCurSec(isCountASC ? 0 : workSecs);
@@ -156,7 +88,7 @@ const TimerProvider = ({children}) => {
   }
 
   const resetAll = () => {
-    _stopInterval();
+    stopInterval();
     setStatus(STATUS.RESET);
     setWasResting(false);
     setCurSec(0);
@@ -166,8 +98,25 @@ const TimerProvider = ({children}) => {
     setCurRound(0);
   }
 
+  // Retrieve the Interval helper API
+  // Give it all it needs to manage context
+  // state between intervals.
+  const { startInterval, stopInterval } = useIntervalHelper({
+      isCountASC,
+      isWorking,
+      workSecs,
+      restSecs,
+      curSec,
+      curRound,
+      rounds,
+      end,
+      setStatus,
+      setCurSec,
+      setCurRound,
+    });
+
   return (
-    // Expose global values of the timer children
+    // Expose global values to the timer children
     <TimerContext.Provider
       value={{
          isCountASC,

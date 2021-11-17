@@ -78,7 +78,7 @@ const XY = () => {
     <div>
       <Panel
           timerTitle={timerTitle}
-          displayRounds={(<DisplayRounds/>)}
+          displayRound={(<DisplayRounds/>)}
           inputs={inputs}
           displayTimes={displayTimes}
       />
