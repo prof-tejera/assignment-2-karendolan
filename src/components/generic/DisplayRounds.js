@@ -45,7 +45,7 @@ const RoundGroup = styled.div`
 
 const DisplayRounds = () => {
   const {
-    numRounds,
+    rounds,
     curRound,
     isResting,
     isEnded,
@@ -53,7 +53,7 @@ const DisplayRounds = () => {
 
   const showRestState = isResting() || isEnded();
   // construct the round row
-  const dots = Array.from(Array(numRounds), (e,i)=>i+1).map(i => {
+  const dots = Array.from(Array(rounds), (e,i)=>i+1).map(i => {
     const isCurRound = (i === curRound);
     return (
       <Round

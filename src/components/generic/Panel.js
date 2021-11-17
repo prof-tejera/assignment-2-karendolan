@@ -103,7 +103,7 @@ const TitleContainer = styled.div`
    // An array of display round objects
    displayRound: PropTypes.instanceOf(DisplayRounds),
    // An array of display time objects
-   displayTime: PropTypes.arrayOf(DisplayTime),
+   displayTimes: PropTypes.arrayOf(DisplayTime),
    // An Array of input objects
    inputs: PropTypes.arrayOf(Input),
  };
