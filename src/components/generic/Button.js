@@ -8,6 +8,7 @@ const sizeMapping = {
   small: 60,
   medium: 80,
   large: 100,
+  xlarge: 140,
 };
 
 // Make rounded corner button, but not as round as the RoundsDisplay

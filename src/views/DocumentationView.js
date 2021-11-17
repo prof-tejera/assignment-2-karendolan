@@ -19,11 +19,13 @@ const DocList = [Loading, DisplayTime, Input, DisplayRounds, Button, ButtonPanel
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  margin: auto;
+  width: 80%;
 `;
 
 const Title = styled.div`
-  font-size: 2rem;
+  font-size: 1rem;
 `;
 
 const Documentation = () => {
@@ -41,12 +43,10 @@ const Documentation = () => {
   })
   return (
     <Container>
-      <div>
-        <Title>Documentation</Title>
-        <TimerProvider>
-          {components}
-        </TimerProvider>
-      </div>
+      <Title>Documentation</Title>
+      <TimerProvider>
+        {components}
+      </TimerProvider>
     </Container>
   );
 }

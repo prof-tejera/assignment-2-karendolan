@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.span`
-  margin-right: 5px;
+  margin-right: 20px;
   color: ${GENERIC.DISPLAY_TIME.label.color};
 `;
 

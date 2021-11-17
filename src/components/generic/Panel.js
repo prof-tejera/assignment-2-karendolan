@@ -2,7 +2,7 @@
  * Panel handles layout of the timer
  * It also controls the color palette
  */
- import React from "react";
+ import React, {useContext} from "react";
  import PropTypes from "prop-types";
  import styled from "styled-components";
 
@@ -11,6 +11,9 @@
  import DisplayRounds from "./DisplayRounds";
  import Input from "./Input";
  import ButtonPanel from "./ButtonPanel";
+
+ // Import the data provider
+ import { TimerContext } from "../../context/TimerProvider";
 
  //import constants and shared
  import GENERIC  from "../../shared/COLOR";
@@ -21,6 +24,7 @@
    display: flex;
    flex-direction: column;
    justify-content: center;
+   height: 85vh;
    width: 500px;
    /* Using Gill Sans because it's fun, easy to read, and emits energy */
    font-family: "Gill Sans", sans-serif;
@@ -30,29 +34,30 @@
 
 const TitleContainer = styled.div`
   color: ${GENERIC.PANEL.INPUT.background};
-  background-color: ${GENERIC.PANEL.DISPLAY.background};
   background-color: ${GENERIC.BUTTON_COLORS.inactive.background};
   padding: 20px 20px 30px;
   font-size: 3em;
   font-weight: bold;
   text-align: center;
 `;
-
+//   padding: 40px 2px;
  const InputsContainer = styled.div`
    color: ${GENERIC.PANEL.INPUT.color};
    background-color: ${GENERIC.PANEL.INPUT.background};
-   padding: 40px 2px;
+   min-height: 20%;
    display: flex;
    flex-direction: column;
    align-items: center;
+   justify-content: center;
 `;
 
   const DisplayContainer = styled.div`
     background-color: ${GENERIC.PANEL.DISPLAY.background};
-    padding: 60px 20px;
+    padding: 20px 60px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    flex-grow: 1;
   `;
 
   const ControlsContainer = styled.div`
@@ -67,13 +72,21 @@ const TitleContainer = styled.div`
    timerTitle,
    inputs,
    displayTimes,
-   displayRounds
+   displayRounds,
  }) => {
+   // Two context items for hidding the settings
+   const {
+     isPaused,
+     isRunning,
+   } = useContext(TimerContext);
+
+   const showInputs = !isPaused() && !isRunning();
+
     console.log('KAREN  panel - rerendering')
     return (
      <PanelStyle>
       <InputsContainer>
-        {inputs}
+        {(showInputs && inputs)}
       </InputsContainer>
       <DisplayContainer>
         {displayTimes}
@@ -124,13 +137,6 @@ const TitleContainer = styled.div`
          description: "An Array of DisplayTimes objects",
          type: "[DisplayTimes]",
          defaultValue: "none",
-       },
-       {
-         prop: 'status',
-         key: 'status',
-         description: 'Status of the timer',
-         type: 'string',
-         defaultValue: "RESET",
        }
      ]
  }

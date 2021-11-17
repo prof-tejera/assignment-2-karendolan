@@ -37,22 +37,26 @@ const DocumentComponent = ({propDocs, component, title}) => {
       <Container>
         <RenderComponent>{component}</RenderComponent>
         <Documentation>
-          <tr>
-            <th>Prop</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Default value</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default value</th>
+            </tr>
+          </thead>
           {propDocs.map((doc) => {
             return (
-              <tr>
-                <td>{doc.prop}</td>
-                <td>{doc.description}</td>
-                <td>{doc.type}</td>
-                <td>
-                  <code>{doc.defaultValue}</code>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>{doc.prop}</td>
+                  <td>{doc.description}</td>
+                  <td>{doc.type}</td>
+                  <td>
+                    <code>{doc.defaultValue}</code>
+                  </td>
+                </tr>
+              </tbody>
             );
           })}
         </Documentation>

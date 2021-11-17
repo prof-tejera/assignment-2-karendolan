@@ -8,8 +8,30 @@ import TimersView from "./views/TimersView";
 // Timer Provider
 import TimerProvider from "./context/TimerProvider";
 
+// import shared color
+import GENERIC  from "./shared/COLOR";
+
+// StyledLink
+// Inspired by Feb 28 blog post by Ridhik Govind
+// https://dev.to/ridhikgovind/how-to-style-your-react-router-links-using-styled-components-2350
+const StyledLink = styled(Link)`
+  color: ${GENERIC.BUTTON_COLORS.inactive.background};
+  text-decoration: none;
+  font-size: 2em;
+  font-weight: bold;
+  margin: 1rem;
+  display: inline-block;
+`;
+
+const StyledNav = styled.div`
+  margin: auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+`;
 
 const Container = styled.div`
+  flex: 1;
   background: #f0f6fb;
   height: 100vh;
   overflow: auto;
@@ -23,14 +45,10 @@ function App() {
     <Container>
       <Router>
         <nav>
-          <ul>
-            <li>
-              <Link to="/">Timers</Link>
-            </li>
-            <li>
-              <Link to="/docs">Documentation</Link>
-            </li>
-          </ul>
+          <StyledNav>
+            <StyledLink to="/">Timers</StyledLink>
+            <StyledLink to="/docs">Documentation</StyledLink>
+          </StyledNav>
         </nav>
         <Switch>
           <Route path="/docs">

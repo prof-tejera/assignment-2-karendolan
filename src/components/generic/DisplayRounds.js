@@ -10,6 +10,7 @@ const sizeMapping = {
 };
 
 const Container = styled.div`
+  margin-top: 20px;
   background-color: ${GENERIC.PANEL.DISPLAY.background};
 `;
 

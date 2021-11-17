@@ -16,17 +16,25 @@ const Timers = styled.div`
   align-items: center;
 `;
 
+const TimerContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+`;
+
 const Timer = styled.div`
   border: 1px solid gray;
   margin: 20px 0 20px;
   border-radius: 20%;
   overflow: hidden;
+  height: 80%;
 `;
 
-const Container = styled.div`
+const MenuContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  margin-right: 30px;
+  margin-top: 80px;
 `;
 
 function App() {
@@ -50,7 +58,7 @@ function App() {
     return (
       <Button
         key={timer.title}
-        size='large'
+        size='xlarge'
         active={true}
         text={timer.title}
         onClick={() => chooseTimer(timer)}
@@ -60,20 +68,19 @@ function App() {
 
   return (
     <Timers>
-      <div>
-        <h1>Timers</h1>
-      </div>
-      <div>
-        <Container>
+      <TimerContainer>
+        <MenuContainer>
+          <div>
+            <h1>Timers</h1>
+          </div>
           {timerElems}
-        </Container>
-      </div>
-        { curTimer && (
+        </MenuContainer>
+        { !!curTimer && (
           <Timer>
             {curTimer.C}
           </Timer>
-        )
-      }
+        )}
+      </TimerContainer>
     </Timers>
   );
 }
