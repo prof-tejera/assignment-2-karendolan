@@ -22,6 +22,7 @@ const InputStyled = styled.input`
   font-weight: bold;
   color: ${GENERIC.INPUT.color};
   background-color: ${primaryColor};
+  border-color: ${GENERIC.PANEL.INPUT.background};
   border-width: medium;
   border-radius: 20px;
   margin-left: 10px;
