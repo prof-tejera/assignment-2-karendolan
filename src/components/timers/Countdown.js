@@ -54,8 +54,6 @@ const Countdown = () => {
   // Set static timer direction state on load
   useEffect(() => {
     setIsCountASC(false);
-    return () => {
-    };
   }, [setIsCountASC]);
 
   return (
@@ -65,7 +63,7 @@ const Countdown = () => {
           inputs={inputs}
           displayTimes={displayTimes}
       />
-    {useEndedEffect()}
+      {useEndedEffect()}
     </div>
   );
 }

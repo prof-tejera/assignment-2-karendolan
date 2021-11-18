@@ -92,8 +92,6 @@ const Tabata = () => {
     // Set static timer direction state on load
     useEffect(() => {
       setIsCountASC(true);
-      return () => {
-      };
     }, [setIsCountASC]);
 
     // Render!
@@ -105,7 +103,7 @@ const Tabata = () => {
             displayTimes={displayTimes}
             displayRound={(<DisplayRounds/>)}
         />
-      {useEndedEffect()}
+        {useEndedEffect()}
       </div>
     );
 }

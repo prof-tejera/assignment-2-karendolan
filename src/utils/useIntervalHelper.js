@@ -45,12 +45,12 @@ const useIntervalHelper = ({
     // TODO: change calc if there are 3 (i.e. countdown state)
     const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;
     // If curSec is at endSec, do a change
-    if (curSec >= endSec) {
+    if (curSec === endSec) {
       // The two active states to increment or change state
       // are Working or Resting. If neither or these states, do no work.
       if (isWorking()) {
         // End, if there are no more rounds and no last rest phase
-        if (curRound >= rounds && !(restSecs > 0)) {
+        if (curRound === rounds && !(restSecs > 0)) {
           end();
         } else if (restSecs > 0) {
           // Otherwise, start resting
@@ -62,7 +62,7 @@ const useIntervalHelper = ({
           setCurSec(c => isCountASC ? 0 : workSecs);
         }
       } else if (isResting()) {
-        if (curRound >= rounds) {
+        if (curRound === rounds) {
           // No more rounds, end on this last rest phase
           end();
         } else {
