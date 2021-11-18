@@ -1,6 +1,5 @@
 /**
- * Panel handles layout of the timer
- * It also controls the color palette
+ * Panel handles layout of the components of the timer
  */
  import React, {useContext} from "react";
  import styled from "styled-components";
@@ -70,7 +69,8 @@ const TitleContainer = styled.div`
    displayTimes,
    displayRound,
  }) => {
-   // Two context items for hidding the settings
+   // The inputs are only shown in the RESET state.
+   // The inputs are hidden when the timer is running or paused.
    const {
      isReset,
    } = useContext(TimerContext);
@@ -104,6 +104,13 @@ const TitleContainer = styled.div`
          key: 'timerTitle',
          description: "The name of the timer",
          type: "String",
+         defaultValue: "none",
+       },
+       {
+         prop: 'inputs',
+         key: 'inputs',
+         description: "An array of Input objects",
+         type: "[Input]",
          defaultValue: "none",
        },
        {

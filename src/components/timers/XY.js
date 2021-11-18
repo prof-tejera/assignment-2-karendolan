@@ -11,6 +11,13 @@ import ConfettiOverlay from "../generic/ConfettiOverlay";
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
 
+/**
+ * XY functional component
+ * Has two inputs, one for rounds, and one for work seconds per round.
+ * Has two time displays to show ending secs for the current round and current
+ * seconds.
+ * Has a rounds display that shows the current round.
+ */
 const XY = () => {
   const timerTitle = "XY";
   const {
@@ -25,6 +32,7 @@ const XY = () => {
   // Hook to reset all state when component unloads;
   useResetCallback();
 
+  // The Array of inputs used in this timer
   const inputs = [
      <Input
       onChange={(event) => {
@@ -49,7 +57,7 @@ const XY = () => {
       key="input-total-rounds"
     />
   ];
-  // Countdown displays the single count down time
+  // The Array of diplays used in this timer
   const displayTimes = [
     <DisplayTime
       seconds={workSecs}

@@ -12,6 +12,13 @@ import ConfettiOverlay from "../generic/ConfettiOverlay";
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
 
+/**
+ * Tabata functional component
+ * Has three inputs, one for rounds, rest secs, work secs.
+ * Has two time displays to show ending secs for the current round and current
+ * seconds.
+ * Has a rounds display that shows the current round.
+ */
 const Tabata = () => {
   const timerTitle = "Tabata";
   const {

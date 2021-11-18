@@ -10,6 +10,11 @@ import { TimerContext } from "../../context/TimerProvider";
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
 
+/**
+ * Stopwatch functional component
+ * Has one input and a display that counts up
+ * and a display that shows the ending time.
+ */
 const Stopwatch = () => {
   const timerTitle = "Stopwatch";
   const {

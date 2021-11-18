@@ -8,6 +8,10 @@ import DisplayTime from "../generic/DisplayTime";
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
 
+/**
+ * Countdown functional component
+ * Has one input and one display that counts down.
+ */
 const Countdown = () => {
   const {
     curSec,

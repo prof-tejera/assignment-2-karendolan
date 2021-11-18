@@ -32,15 +32,12 @@ const LabelStyled = styled.label`
   color: ${GENERIC.INPUT.LABEL.color};
   text-align: right;
 `;
-
-// The Generic Input cannot use a Timer context because the component is
-// too generic. The values it updates are variable in the
-// context (rounds, work secs, rest secs, etc). The context of the iput is
-// controlled at the timer level.
+/**
+ * A Generic Input
+ * The context of the input is controlled from the timer through
+ * the timer's context provider.
+ */
 const Input = ({value, onChange, name, label, maxNum}) => {
-
-  // If value is 0, null it out so the prompt 0 is shown
-  // const normalizedValue = value === 0 ? undefined : value;
   return (
     <InputContainer>
       <LabelStyled
