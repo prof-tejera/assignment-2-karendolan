@@ -72,7 +72,6 @@ const TimerProvider = ({children}) => {
   }
 
   const work = () => {
-    console.log('KAREN in work() status', status, 'wasResting', wasResting);
     // If first start, initialize start seconds
     setCurSec(isPaused ? curSec : (isCountASC ? workSecs : 0));
     // If first start, initialize current round
@@ -84,7 +83,6 @@ const TimerProvider = ({children}) => {
   }
 
   const pause = () => {
-    console.log("KAREN in pause() isWorking()", isWorking(), 'status', status);
     setWasResting(!isWorking());
     setStatus(STATUS.PAUSED);
     stopInterval();
