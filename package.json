@@ -2,7 +2,7 @@
   "name": "assignment-1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://prof-tejera.github.io/assignment-1-karendolan",
+  "homepage": "https://prof-tejera.github.io/assignment-2-karendolan",
   "dependencies": {
     "react": "^17.0.2",
     "react-confetti": "^6.0.1",
