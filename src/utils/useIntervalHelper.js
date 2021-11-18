@@ -30,6 +30,8 @@ const useIntervalHelper = ({
   // The termination function
   status,
   end,
+  // The current terminating number
+  getCurEndSecs,
 }) => {
   // Initialize the 2 ref references
   const interval = useRef(null);
@@ -41,11 +43,8 @@ const useIntervalHelper = ({
   const callback = () => {
     // Short circuit when not in an interval state
     if (!isInIntervaleState) return;
-    // Calculate the critical end sec when state will change
-    // TODO: change calc if there are 3 (i.e. countdown state)
-    const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;
-    // If curSec is at endSec, do a change
-    if (curSec === endSec) {
+    // If curSec is at curEndSecs, do a change
+    if (curSec === getCurEndSecs()) {
       // The two active states to increment or change state
       // are Working or Resting. If neither or these states, do no work.
       if (isWorking()) {

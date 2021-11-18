@@ -47,11 +47,14 @@ const TitleContainer = styled.div`
 `;
 
   const DisplayContainer = styled.div`
-    background-color: ${GENERIC.PANEL.DISPLAY.background};
-    padding: 20px 60px 20px;
+    background-color: ${(props) => {
+      return GENERIC.PANEL.DISPLAY[props.bg].background
+    }};
     display: flex;
     flex-direction: column;
+    align-content: center;
     justify-content: center;
+    padding: 60px 60px 20px;
     flex-grow: 1;
   `;
 
@@ -73,16 +76,29 @@ const TitleContainer = styled.div`
    // The inputs are hidden when the timer is running or paused.
    const {
      isReset,
+     curSec,
+     isEnded,
+     isRunning,
+     getCurStartSecs,
    } = useContext(TimerContext);
+
+   // Change color depending on state
+   const displayColorKey = (
+     // If start of Timer, or inbetween rounds
+     isRunning() && curSec === getCurStartSecs()
+     ? 'ready'
+     // If ended or in the middle of a count
+     : (isEnded() ? 'end' : 'default' )
+    );
 
     return (
      <PanelStyle>
       <InputsContainer>
         {(isReset() && inputs)}
       </InputsContainer>
-      <DisplayContainer>
-        {displayTimes}
-        {displayRound}
+      <DisplayContainer bg={displayColorKey}>
+          {displayTimes}
+          {displayRound}
       </DisplayContainer>
       <ControlsContainer>
         <ButtonPanel/>

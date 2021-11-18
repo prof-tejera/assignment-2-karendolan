@@ -83,7 +83,9 @@ const GENERIC = {
       background: COLOR.primary2.color,
     },
     DISPLAY:{
-      background: COLOR.primary0.color,
+      default: {background: COLOR.primary0.color},
+      ready: {background: COLOR.secondary12.color},
+      end: {background: COLOR.secondary14.color},
     },
     CONTROLS: {
       background: COLOR.primary2.color,

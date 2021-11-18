@@ -59,6 +59,27 @@ const TimerProvider = ({children}) => {
     );
   }
 
+  // This returns the current terminating second count
+  const getCurEndSecs = () => {
+    if (isResting() || isWorking()) {
+      return (isCountASC ? (isWorking() ? workSecs: restSecs) : 0);
+    } else if (wasResting) {
+      return (isCountASC ? (!wasResting ? workSecs: restSecs) : 0);
+    } else {
+      return (isCountASC ? (restSecs > 0 ? restSecs : workSecs) : 0);
+    }
+  }
+
+  const getCurStartSecs = () => {
+    if (isResting() || isWorking()) {
+      return (isCountASC ? 0 : (isWorking() ? workSecs: restSecs));
+    } else if (wasResting) {
+      return (isCountASC ? 0 : (!wasResting ? workSecs: restSecs));
+    } else {
+      return (isCountASC ? 0 : (restSecs > 0 ? restSecs : workSecs));
+    }
+  }
+
   // -----  State change callback functions ---  //
 
   const end = () => {
@@ -125,6 +146,7 @@ const TimerProvider = ({children}) => {
       setCurSec,
       setCurRound,
       status,
+      getCurEndSecs,
     });
 
   return (
@@ -156,6 +178,7 @@ const TimerProvider = ({children}) => {
          isWorking,
          isReset,
          isInRestingContext,
+         getCurStartSecs,
        }}>
       {children}
     </TimerContext.Provider>
