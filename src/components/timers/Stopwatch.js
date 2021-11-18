@@ -4,11 +4,12 @@ import React, {useContext, useEffect } from "react";
 import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
-import ConfettiOverlay from "../generic/ConfettiOverlay";
 import { TimerContext } from "../../context/TimerProvider";
 
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
+// Hook to show a fun effect when timer ends
+import useEndedEffect from '../../utils/useEndedEffect';
 
 /**
  * Stopwatch functional component
@@ -22,7 +23,6 @@ const Stopwatch = () => {
     workSecs,
     setWorkSecs,
     setIsCountASC,
-    isEnded,
   } = useContext(TimerContext);
 
   // Hook to reset all state when component unloads;
@@ -65,12 +65,6 @@ const Stopwatch = () => {
     setIsCountASC(true);
   }, [setIsCountASC]);
 
-  // Celebrate ending!
-  let confetti;
-  if (isEnded()) {
-    confetti = (<ConfettiOverlay />);
-  };
-
   // The Return Rendered componet
   return (
     <div>
@@ -79,7 +73,7 @@ const Stopwatch = () => {
         timerTitle={timerTitle}
         inputs={inputs}
       />
-    {confetti}
+      {useEndedEffect()}
     </div>
   );
 }

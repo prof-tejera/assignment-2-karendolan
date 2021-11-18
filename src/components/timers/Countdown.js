@@ -1,12 +1,13 @@
-import React, { useContext, useEffect } from "react";
-import { TimerContext } from "../../context/TimerProvider";
+import React, { useContext, useEffect } from 'react';
+import { TimerContext } from '../../context/TimerProvider';
 // Import components
-import Panel from "../generic/Panel";
-import Input from "../generic/Input";
-import ConfettiOverlay from "../generic/ConfettiOverlay";
-import DisplayTime from "../generic/DisplayTime";
+import Panel from '../generic/Panel';
+import Input from '../generic/Input';
+import DisplayTime from '../generic/DisplayTime';
 // Hook to reset all state when component unloads
-import useResetCallback from "../../utils/useResetCallback";
+import useResetCallback from '../../utils/useResetCallback';
+// Hook to show a fun effect when timer ends
+import useEndedEffect from '../../utils/useEndedEffect';
 
 /**
  * Countdown functional component
@@ -19,13 +20,12 @@ const Countdown = () => {
     setWorkSecs,
     setCurSec,
     setIsCountASC,
-    isEnded,
   } = useContext(TimerContext);
 
   // Hook to reset all state when component unloads;
   useResetCallback();
 
-  const timerTitle = "Countdown";
+  const timerTitle = 'Countdown';
   const inputs = [
      <Input
       onChange={(event) => {
@@ -35,31 +35,28 @@ const Countdown = () => {
         // Setting Cur sec to start at the total for countdown
         setCurSec((num > 0 ? num : 0));
       }}
-      label="Seconds"
-      name="seconds"
+      label='Seconds'
+      name='seconds'
       value={workSecs}
-      key="input-total-seconds"
+      key='input-total-seconds'
     />
   ];
   // Countdown displays the single count down time
   const displayTimes = [
     <DisplayTime
       seconds={curSec}
-      size="large"
+      size='large'
       active={true}
-      key="display-current-seconds"
+      key='display-current-seconds'
     />
   ]
 
   // Set static timer direction state on load
   useEffect(() => {
     setIsCountASC(false);
+    return () => {
+    };
   }, [setIsCountASC]);
-
-  let confetti;
-  if (isEnded()) {
-    confetti = (<ConfettiOverlay />);
-  };
 
   return (
     <div>
@@ -68,7 +65,7 @@ const Countdown = () => {
           inputs={inputs}
           displayTimes={displayTimes}
       />
-    {confetti}
+    {useEndedEffect()}
     </div>
   );
 }

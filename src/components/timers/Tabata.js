@@ -7,10 +7,11 @@ import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayTime from "../generic/DisplayTime";
 import DisplayRounds from "../generic/DisplayRounds";
-import ConfettiOverlay from "../generic/ConfettiOverlay";
 
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
+// Hook to show a fun effect when timer ends
+import useEndedEffect from '../../utils/useEndedEffect';
 
 /**
  * Tabata functional component
@@ -30,7 +31,6 @@ const Tabata = () => {
     rounds,
     setRounds,
     setIsCountASC,
-    isEnded,
     isInRestingContext,
   } = useContext(TimerContext);
   // Hook to reset all state when component unloads;
@@ -96,11 +96,6 @@ const Tabata = () => {
       };
     }, [setIsCountASC]);
 
-    let confetti;
-    if (isEnded()) {
-      confetti = (<ConfettiOverlay />);
-    };
-
     // Render!
     return (
       <div>
@@ -110,7 +105,7 @@ const Tabata = () => {
             displayTimes={displayTimes}
             displayRound={(<DisplayRounds/>)}
         />
-      {confetti}
+      {useEndedEffect()}
       </div>
     );
 }

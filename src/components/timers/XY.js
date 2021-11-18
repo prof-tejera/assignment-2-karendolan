@@ -6,10 +6,11 @@ import Panel from "../generic/Panel";
 import Input from "../generic/Input";
 import DisplayRounds from "../generic/DisplayRounds";
 import DisplayTime from "../generic/DisplayTime";
-import ConfettiOverlay from "../generic/ConfettiOverlay";
 
 // Hook to reset all state when component unloads
 import useResetCallback from "../../utils/useResetCallback";
+// Hook to show a fun effect when timer ends
+import useEndedEffect from '../../utils/useEndedEffect';
 
 /**
  * XY functional component
@@ -27,7 +28,6 @@ const XY = () => {
     rounds,
     setRounds,
     setIsCountASC,
-    isEnded,
   } = useContext(TimerContext);
   // Hook to reset all state when component unloads;
   useResetCallback();
@@ -77,11 +77,6 @@ const XY = () => {
     setIsCountASC(true);
   }, [setIsCountASC]);
 
-  let confetti;
-  if (isEnded()) {
-    confetti = (<ConfettiOverlay />);
-  };
-
   return (
     <div>
       <Panel
@@ -90,7 +85,7 @@ const XY = () => {
           inputs={inputs}
           displayTimes={displayTimes}
       />
-    {confetti}
+      {useEndedEffect()}
     </div>
   );
 }
