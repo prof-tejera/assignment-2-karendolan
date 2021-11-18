@@ -20,7 +20,7 @@ In this assignment, we will start using the foundation we lay in A1 and make our
 - Application state should be managed with context. That is, timers should NOT track time, rounds, etc, locally or pass it down to its children
 - Make sure that you can switch between timers without breaking the app (e.g. I should not have to refresh in order to run another timer after a run has been completed)
 - Update documentation as your components change. 
-- Your application must be deployed and the link pasted somewhere in this README
+- Your application must be deployed and the link is [https://prof-tejera.github.io/assignment-2-karendolan/](https://prof-tejera.github.io/assignment-2-karendolan/)
 
 ### Deployment Instructions (GH actions)
 
