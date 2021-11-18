@@ -21,29 +21,36 @@ const useIntervalHelper = ({
   isCountASC,
   // State check function to test if currently in rest or work state
   isWorking,
+  isResting,
+  isCountDown,
   // Change state functions
   setStatus,
   setCurSec,
   setCurRound,
   // The termination function
+  status,
   end,
 }) => {
   // Initialize the 2 ref references
   const interval = useRef(null);
   const savedCallback = useRef(null);
+  const isInIntervaleState = isResting() || isWorking();
 
   // This function does the work neede between each interval
   // to ensure the correct state is set on the interval increment.
   const callback = () => {
+    // Short circuit when not in an interval state
+    if (!isInIntervaleState) return;
     // Calculate the critical end sec when state will change
+    // TODO: change calc if there are 3 (i.e. countdown state)
     const endSec = isCountASC ? (isWorking() ? workSecs: restSecs) : 0;
     // If curSec is at endSec, do a change
-    if (curSec === endSec) {
-      // The Two possible states a the end of an interval
-      // are Working or Resting
+    if (curSec >= endSec) {
+      // The two active states to increment or change state
+      // are Working or Resting. If neither or these states, do no work.
       if (isWorking()) {
         // End, if there are no more rounds and no last rest phase
-        if (curRound === rounds && !(restSecs > 0)) {
+        if (curRound >= rounds && !(restSecs > 0)) {
           end();
         } else if (restSecs > 0) {
           // Otherwise, start resting
@@ -54,9 +61,8 @@ const useIntervalHelper = ({
           setCurRound(r => r + 1);
           setCurSec(c => isCountASC ? 0 : workSecs);
         }
-      } else {
-        // Must be in Resting state
-        if (curRound === rounds) {
+      } else if (isResting()) {
+        if (curRound >= rounds) {
           // No more rounds, end on this last rest phase
           end();
         } else {
@@ -65,9 +71,12 @@ const useIntervalHelper = ({
           setCurSec(c => isCountASC ? 0 : workSecs);
           setCurRound(r => r + 1);
         }
+      } else {
+        // This will never happen :) ...but, in case it does, it's not invisible
+        console.error('Warning: the interval counter is active, but the Timer context is not in a working state');
       }
-    } else {
-      // Not at end time, yet. Keep iterating on current seconds
+    } else if (isResting() || isWorking()) {
+      // Iterate the current seconds
       setCurSec(c => isCountASC ? c + 1 : c - 1);
     }
   }

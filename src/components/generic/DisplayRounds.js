@@ -47,18 +47,20 @@ const DisplayRounds = () => {
   const {
     rounds,
     curRound,
-    isResting,
-    isEnded,
+    isInRestingContext,
   } = useContext(TimerContext);
 
-  const showRestState = isResting() || isEnded();
   // construct the round row
   const dots = Array.from(Array(rounds), (e,i)=>i+1).map(i => {
     const isCurRound = (i === curRound);
     return (
       <Round
         size={isCurRound ? sizeMapping.large : sizeMapping.medium}
-        activeKey={isCurRound ? (showRestState ? 'resting' :'active') : 'inactive'}
+        activeKey={
+          isCurRound
+          ? (isInRestingContext() ? 'resting' :'active')
+          : 'inactive'
+        }
         key={i}
       >
         {isCurRound && curRound}

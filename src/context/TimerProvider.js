@@ -43,6 +43,21 @@ const TimerProvider = ({children}) => {
   const isWorking = () => {
     return status === STATUS.WORKING;
   }
+  // Special case context for RESTing status, used for Tabata
+  // TODO: consider moving Workout/Restperiod/Countdown
+  // into a different param than status to remove this complexity
+  const isInRestingContext = () => {
+    return (
+      // the state is RESTING
+      isResting()
+      ||
+      // the state is PAUSED but the pause was for RESTING
+      (wasResting && isPaused())
+      ||
+      // the state is ENDED and timer default is to end on RESTING state
+      (restSecs > 0 && isEnded())
+    );
+  }
 
   // -----  State change callback functions ---  //
 
@@ -57,24 +72,20 @@ const TimerProvider = ({children}) => {
   }
 
   const work = () => {
-    // If was paused, set work status to either the work of resting or working
-    setStatus(wasResting ? STATUS.RESTING : STATUS.WORKING);
-    // If first start, initialize current round
-    setCurRound(curSec === 0 && rounds > 0 && curRound === 0 ? 1 : curRound);
+    console.log('KAREN in work() status', status, 'wasResting', wasResting);
     // If first start, initialize start seconds
     setCurSec(isPaused ? curSec : (isCountASC ? workSecs : 0));
+    // If first start, initialize current round
+    setCurRound(curSec === 0 && rounds > 0 && curRound === 0 ? 1 : curRound);
+    // If was paused, set work status to either the work of resting or working
+    setStatus(wasResting ? STATUS.RESTING : STATUS.WORKING);
     // Start the counter!
     startInterval();
   }
 
-  const rest = () => {
-    setStatus(STATUS.RESTING);
-    // Calling start ends prevous interval, if not already ended
-    startInterval();
-  }
-
   const pause = () => {
-    setWasResting(isWorking());
+    console.log("KAREN in pause() isWorking()", isWorking(), 'status', status);
+    setWasResting(!isWorking());
     setStatus(STATUS.PAUSED);
     stopInterval();
   }
@@ -101,9 +112,11 @@ const TimerProvider = ({children}) => {
   // Retrieve the Interval helper API
   // Give it all it needs to manage context
   // state between intervals.
+  // Passing as params to avoid cyclic dependency loop with context
   const { startInterval, stopInterval } = useIntervalHelper({
       isCountASC,
       isWorking,
+      isResting,
       workSecs,
       restSecs,
       curSec,
@@ -113,6 +126,7 @@ const TimerProvider = ({children}) => {
       setStatus,
       setCurSec,
       setCurRound,
+      status,
     });
 
   return (
@@ -133,7 +147,6 @@ const TimerProvider = ({children}) => {
          setCurRound,
          status,
          work,
-         rest,
          pause,
          end,
          resetStart,
@@ -144,6 +157,7 @@ const TimerProvider = ({children}) => {
          isResting,
          isWorking,
          isReset,
+         isInRestingContext,
        }}>
       {children}
     </TimerContext.Provider>

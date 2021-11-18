@@ -23,16 +23,15 @@ const Tabata = () => {
     rounds,
     setRounds,
     setIsCountASC,
-    isResting,
     isEnded,
+    isInRestingContext,
   } = useContext(TimerContext);
   // Hook to reset all state when component unloads;
   useResetCallback();
 
   // The amount of total secs in current Tabata segment
-  // Ends on REST sequence
-  const seconds = isResting() || isEnded() ? restSecs : workSecs;
-  const label = isResting() || isEnded() ? 'Rest' : 'Work';
+  const seconds =  isInRestingContext() ? restSecs : workSecs;
+  const label = isInRestingContext() ? 'Rest' : 'Work';
 
   const inputs = [
     <Input
