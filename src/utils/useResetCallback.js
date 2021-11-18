@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef} from "react";
 import { TimerContext } from "../context/TimerProvider";
 
 /**
- * Custom hook to reset all state when tool unloads
+ * Custom hook to reset all state when a Timer unloads
  */
 const useResetCallback = () => {
   const { resetAll } = useContext(TimerContext);

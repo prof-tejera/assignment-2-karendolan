@@ -43,6 +43,12 @@ const RoundGroup = styled.div`
   }
 `;
 
+/**
+ * A functional component to display the current round
+ * the timer is in in the context of the total number of rounds
+ * The current round changes appearance if in a
+ * resting context vs working context.
+ */
 const DisplayRounds = () => {
   const {
     rounds,
@@ -81,6 +87,7 @@ const DisplayRounds = () => {
 DisplayRounds.docs =   {
   title: 'Display rounds ',
   component: <DisplayRounds />,
+  // No more props, all comes from context 
   props: [],
 };
 

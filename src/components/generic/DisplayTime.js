@@ -1,7 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import GENERIC  from "../../shared/COLOR";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+// Import centralized Timer color
+import GENERIC  from '../../shared/COLOR';
+// Import timer utlity function
+import { getHmsDisplayFromSecs } from '../../utils/HelperFunctions';
 
 const fontSizeMap = {
   small: '.8em',
@@ -23,27 +26,21 @@ const Label = styled.span`
   color: ${GENERIC.DISPLAY_TIME.label.color};
 `;
 
-// Seconds is passed in because this display component is generic and
-// doesn't know which set of seconds to use from the global context.
+/**
+ * Display Time is used to show a time, either the active or total
+ * number of seconds of the Timer. A Timer may use multiple DisplayTime
+ * components to display different second sets.
+ */
 const DisplayTime = ({ seconds, label, active, size }) => {
   // const seconds = 7446; //2hr, 4 min, 6 secs
   const textSize = fontSizeMap[size];
-  // TODO: Move this to Utils area?
-  // Split the seconds into Hour :  Min : Sec
-  const hour = Math.floor(seconds / (60 * 60));
-  const min = Math.floor(seconds % (60 * 60) / 60);
-  const sec = Math.floor(seconds % (60 * 60) % 60);
   return (
     <Container
       size={textSize}
       activeKey={active ? 'active' : 'inactive'}
     >
       {!active && label && <Label>{label}</Label>}
-      {('00' + hour).slice(-2)}
-      :
-      {('00' + min).slice(-2)}
-      :
-      {('00' + sec).slice(-2)}
+      { getHmsDisplayFromSecs(seconds) }
     </Container >
   );
 };
@@ -74,8 +71,8 @@ DisplayTime.docs =   {
       {
         prop: 'seconds',
         key: 'seconds',
-        description: "Changes the time diplayed",
-        type: "integer",
+        description: 'Changes the time diplayed',
+        type: 'integer',
         defaultValue: DisplayTime.defaultProps.seconds,
       },
       {

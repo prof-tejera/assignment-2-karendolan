@@ -27,7 +27,10 @@ const ButtonPanel = () => {
     isReset,
   } = useContext(TimerContext);
 
+  // All timers use these two buttons
+  // The Reset button handles ending, reseting to start, or clearing all state
   const resetButtonFunc = isRunning() ? end : (isReset() ? resetAll : resetStart);
+  // the Work button handles pausing and playing the timer
   const workButtonFunc = isRunning() ? pause : work;
 
   return (
@@ -48,7 +51,7 @@ const ButtonPanel = () => {
   )
 };
 
-// Class param description for the docs=
+// Class param description for the docs
 ButtonPanel.docs =   {
   title: 'ButtonPanel ',
   component: <ButtonPanel  onClick={()=>{}} />,
